@@ -53,26 +53,6 @@ function Object:getSubTable(module, nameKey)
     return result
 end
 
-function Object:licenseCheck()
-    local licInfoSent = self.cacheHelper:get("licInfoSent")
-    ngx.log(ngx.DEBUG, "licInfoSent -----> ", licInfoSent)
-    if licInfoSent == 0 then
-        local licInfo = license.get_lic_info()
-        if licInfo == 2 then
-            local regInfo  = self.dbmodule:getOne("LicenseInfo", {_id = "single"})
-            local trialPrd = tonumber(regInfo.trialPrd)
-            local now = ngx.time()
-            local remains = math.floor((trialPrd-now)/(60*60*24))
-
-            licInfoSent = self.cacheHelper:incr("licInfoSent", 1)
-            ngx.log(ngx.DEBUG, "licInfoSent =====> ", licInfoSent)
-
-            return {status = 500, msg =  "The Evaluation License will expire in " .. remains .. " days!" }
-        end
-    end
-    return {status = 200}
-end
-
 function Object:getSpecialSubModule(module, subModule, _id)
     local qry = {["$and"]={
             {["subModule"] = subModule},
@@ -92,14 +72,6 @@ function removeItemByName(items, name)
     end
 end
 
-function Object:getDeviceInfo(device)
-    local deviceInfo = self.dbmodule:getOne("Devices", {_id = device})
-    if not deviceInfo or not deviceInfo.ipAddress then
-        ngx.log(ngx.ERR, "Device ", device, " not exist in database!")
-    end
-    return deviceInfo
-end
-
 function Object:proxyPreProcess(device)
     local deviceInfo = self:getDeviceInfo(device)
     local cookies = ngx.req.get_headers()["Cookie"]
@@ -110,50 +82,6 @@ function Object:proxyPreProcess(device)
     end
     ngx.req.set_header("Authorization", util:base64Encode(deviceInfo.username .. ":" .. deviceInfo.password))
     return
-end
-
-function Object:getDeviceInterface(device)
-    local result = {}
-    local deviceInfo = self:getDeviceInfo(device)
-    self:proxyPreProcess(device)
-    local proxyApi = "/proxy/api/v1.0/System/Network/Interface"
-    result = util:proxy(proxyApi, args, nil, ngx.HTTP_GET)
-    if ngx.status < 300 then
-        result = util:jsonDecode(result)
-        deviceInfo["interface"] = result
-        self:put("Devices", "", util:jsonEncode(deviceInfo), device, "", "")
-    else
-        ngx.status = 200
-        result = deviceInfo["interface"]
-    end
-    return not result and {} or result
-end
-
-function Object:getVzoneInterface(objectsInterfaceModule, vzoneModule, vzoneName)
-
-    local result = self.dbmodule:getMul(objectsInterfaceModule, {parentID = {["$exists"] = false}})
-    local vzones = self.dbmodule:getMul(vzoneModule, {})
-    if vzoneName then
-        removeItemByName(vzones, vzoneName)
-    end
-
-    local vzoneItem = nil
-    local interfaceName = nil
-    for _, vzoneItem in ipairs(vzones) do
-        for _, interfaceName in ipairs(vzoneItem["interface"]) do
-            removeItemByName(result, interfaceName)
-        end
-    end
-    return result
-end
-
-function Object:getSignatureViolationSubSig (module, qry)
-    local subSigntures = self.dbmodule:getOne(module, qry)
-    local result = {}
-    if next(subSigntures) ~= nil then
-        result = subSigntures["data"]
-    end
-    return result
 end
 
 function Object:decorateResult(module, resultTable, _id)
@@ -228,20 +156,6 @@ function Object:post(module, args, jsonStr, _id, subModule, isFile)
         doc.parentID = _id
         isSub = "Sub"
     end
-
-    if subModule ~= "" then
-        if module == "HiddenFieldsRule" or module == "CSRFProtection" then 
-            doc.subModule = subModule
-        elseif module == "ObjectsInterface" then
-            doc = self:setObjectsInterfaceSub(doc)
-        end
-    end
-
-    if sysConf.spSubMods[subModule] == true then
-        self.dbmodule:delete(module, {parentID = _id})
-        doc.sp = 1
-    end
-
     return self.dbmodule:add(module..isSub, doc)
 end
 
