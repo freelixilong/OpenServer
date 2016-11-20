@@ -1,0 +1,56 @@
+2016/11/19 02:01:47 [alert] 24490#0: lua_code_cache is off; this will hurt performance in ./nginx/conf/nginx.conf:48
+2016/11/19 02:02:16 [error] 24492#0: *1 failed to load external Lua file "./..//lua/access.lua": cannot open ./..//lua/access.lua: No such file or directory, client: 192.168.199.183, server: localhost, request: "GET / HTTP/1.1", host: "192.168.199.104"
+2016/11/19 02:06:14 [alert] 24552#0: lua_code_cache is off; this will hurt performance in ./nginx/conf/nginx.conf:48
+2016/11/19 02:06:35 [error] 24554#0: *1 failed to load external Lua file "./..//lua/access.lua": cannot open ./..//lua/access.lua: No such file or directory, client: 192.168.199.183, server: localhost, request: "GET / HTTP/1.1", host: "192.168.199.104"
+2016/11/19 02:06:39 [error] 24554#0: *1 failed to load external Lua file "./..//lua/access.lua": cannot open ./..//lua/access.lua: No such file or directory, client: 192.168.199.183, server: localhost, request: "GET / HTTP/1.1", host: "192.168.199.104"
+2016/11/19 02:08:31 [emerg] 24597#0: "echo" directive is not allowed here in ./nginx/conf/nginx.conf:43
+2016/11/19 02:09:50 [alert] 24602#0: lua_code_cache is off; this will hurt performance in ./nginx/conf/nginx.conf:47
+2016/11/19 02:09:55 [error] 24604#0: *1 failed to load external Lua file "./..//lua/access.lua": cannot open ./..//lua/access.lua: No such file or directory, client: 192.168.199.183, server: localhost, request: "GET / HTTP/1.1", host: "192.168.199.104"
+2016/11/19 02:09:58 [error] 24604#0: *1 failed to load external Lua file "./..//lua/access.lua": cannot open ./..//lua/access.lua: No such file or directory, client: 192.168.199.183, server: localhost, request: "GET / HTTP/1.1", host: "192.168.199.104"
+2016/11/19 02:12:08 [alert] 24628#0: lua_code_cache is off; this will hurt performance in ./nginx/conf/nginx.conf:47
+2016/11/19 02:12:08 [emerg] 24628#0: bind() to 0.0.0.0:80 failed (98: Address already in use)
+2016/11/19 02:12:08 [emerg] 24628#0: bind() to 0.0.0.0:80 failed (98: Address already in use)
+2016/11/19 02:12:08 [emerg] 24628#0: bind() to 0.0.0.0:80 failed (98: Address already in use)
+2016/11/19 02:12:08 [emerg] 24628#0: bind() to 0.0.0.0:80 failed (98: Address already in use)
+2016/11/19 02:12:08 [emerg] 24628#0: bind() to 0.0.0.0:80 failed (98: Address already in use)
+2016/11/19 02:12:08 [emerg] 24628#0: still could not bind()
+2016/11/19 02:12:34 [alert] 24633#0: lua_code_cache is off; this will hurt performance in ./nginx/conf/nginx.conf:47
+2016/11/19 02:12:43 [error] 24635#0: *1 failed to load external Lua file "./../lua/access.lua": cannot open ./../lua/access.lua: No such file or directory, client: 192.168.199.183, server: localhost, request: "GET / HTTP/1.1", host: "192.168.199.104"
+2016/11/19 02:13:03 [error] 24635#0: *1 failed to load external Lua file "./../lua/access.lua": cannot open ./../lua/access.lua: No such file or directory, client: 192.168.199.183, server: localhost, request: "GET / HTTP/1.1", host: "192.168.199.104"
+2016/11/19 02:14:16 [info] 24635#0: *1 client 192.168.199.183 closed keepalive connection
+2016/11/19 20:37:18 [alert] 1484#0: lua_code_cache is off; this will hurt performance in ./nginx/conf/nginx.conf:47
+2016/11/19 20:37:37 [debug] 1486#0: *1 [lua] access.lua:5: access ************** checker 
+2016/11/19 20:37:37 [debug] 1486#0: *1 [lua] ctrl.lua:27: getSessionInfo(): get sessionid as token:   nil
+2016/11/19 20:37:37 [debug] 1486#0: *1 [lua] session.lua:59: check(): session check ... nil
+2016/11/19 20:37:37 [debug] 1486#0: *1 [lua] session.lua:62: check(): access session check ... failed for uri =========+++++++++<> /
+2016/11/19 20:37:37 [debug] 1486#0: *1 [lua] session.lua:63: check(): access session check ... failed and rediect to /login.html
+2016/11/19 20:37:38 [error] 1486#0: *1 open() "./../nginxd/implementation404" failed (2: No such file or directory), client: 192.168.199.183, server: localhost, request: "GET /login.html HTTP/1.1", host: "192.168.199.104"
+2016/11/19 20:37:38 [debug] 1486#0: *1 [lua] access.lua:5: access ************** checker 
+2016/11/19 20:37:38 [debug] 1486#0: *1 [lua] ctrl.lua:27: getSessionInfo(): get sessionid as token:   nil
+2016/11/19 20:37:38 [debug] 1486#0: *1 [lua] session.lua:59: check(): session check ... nil
+2016/11/19 20:37:38 [debug] 1486#0: *1 [lua] session.lua:62: check(): access session check ... failed for uri =========+++++++++<> /favicon.ico
+2016/11/19 20:37:38 [debug] 1486#0: *1 [lua] session.lua:63: check(): access session check ... failed and rediect to /login.html
+2016/11/19 20:37:38 [error] 1486#0: *1 open() "./../nginxd/implementation404" failed (2: No such file or directory), client: 192.168.199.183, server: localhost, request: "GET /login.html HTTP/1.1", host: "192.168.199.104", referrer: "http://192.168.199.104/login.html"
+2016/11/19 20:37:45 [error] 1486#0: *1 open() "./../nginxd/implementation404" failed (2: No such file or directory), client: 192.168.199.183, server: localhost, request: "GET /login.html HTTP/1.1", host: "192.168.199.104"
+2016/11/19 20:37:48 [error] 1486#0: *1 open() "./../nginxd/implementation404" failed (2: No such file or directory), client: 192.168.199.183, server: localhost, request: "GET /login.html HTTP/1.1", host: "192.168.199.104"
+2016/11/19 20:40:00 [alert] 1495#0: lua_code_cache is off; this will hurt performance in ./nginx/conf/nginx.conf:47
+2016/11/19 20:40:14 [error] 1497#0: *1 open() "./../nginxd/implementation404" failed (2: No such file or directory), client: 192.168.199.183, server: localhost, request: "GET /login.html HTTP/1.1", host: "192.168.199.104"
+2016/11/19 20:40:17 [error] 1497#0: *1 open() "./../nginxd/implementation404" failed (2: No such file or directory), client: 192.168.199.183, server: localhost, request: "GET /login.html HTTP/1.1", host: "192.168.199.104"
+2016/11/19 20:40:39 [error] 1497#0: *1 open() "./../nginxd/implementation404" failed (2: No such file or directory), client: 192.168.199.183, server: localhost, request: "GET /login.html HTTP/1.1", host: "192.168.199.104"
+2016/11/19 20:47:48 [error] 1497#0: *2 open() "./../nginxd/implementation/bower_components/modernizr/modernizr.js" failed (2: No such file or directory), client: 192.168.199.183, server: localhost, request: "GET /bower_components/modernizr/modernizr.js HTTP/1.1", host: "192.168.199.104", referrer: "http://192.168.199.104/login.html"
+2016/11/19 20:47:48 [error] 1497#0: *3 open() "./../nginxd/implementation/themes/project/css/login.css" failed (2: No such file or directory), client: 192.168.199.183, server: localhost, request: "GET /themes/project/css/login.css HTTP/1.1", host: "192.168.199.104", referrer: "http://192.168.199.104/login.html"
+2016/11/19 20:53:05 [alert] 1545#0: lua_code_cache is off; this will hurt performance in ./nginx/conf/nginx.conf:47
+2016/11/19 20:53:05 [emerg] 1545#0: bind() to 0.0.0.0:80 failed (98: Address already in use)
+2016/11/19 20:53:05 [emerg] 1545#0: bind() to 0.0.0.0:80 failed (98: Address already in use)
+2016/11/19 20:53:05 [emerg] 1545#0: bind() to 0.0.0.0:80 failed (98: Address already in use)
+2016/11/19 20:53:05 [emerg] 1545#0: bind() to 0.0.0.0:80 failed (98: Address already in use)
+2016/11/19 20:53:05 [emerg] 1545#0: bind() to 0.0.0.0:80 failed (98: Address already in use)
+2016/11/19 20:53:05 [emerg] 1545#0: still could not bind()
+2016/11/19 20:53:22 [alert] 1551#0: lua_code_cache is off; this will hurt performance in ./nginx/conf/nginx.conf:47
+2016/11/19 20:53:38 [debug] 1553#0: *1 [lua] access.lua:5: access ************** checker 
+2016/11/19 20:53:38 [debug] 1553#0: *1 [lua] ctrl.lua:27: getSessionInfo(): get sessionid as token:   nil
+2016/11/19 20:53:38 [debug] 1553#0: *1 [lua] session.lua:59: check(): session check ... nil
+2016/11/19 20:53:38 [debug] 1553#0: *1 [lua] session.lua:62: check(): access session check ... failed for uri =========+++++++++<> /
+2016/11/19 20:53:38 [debug] 1553#0: *1 [lua] session.lua:63: check(): access session check ... failed and rediect to /login.html
+2016/11/19 20:53:38 [error] 1553#0: *1 open() "./../nginxd/implementation/bower_components/modernizr/modernizr.js" failed (2: No such file or directory), client: 192.168.199.183, server: localhost, request: "GET /bower_components/modernizr/modernizr.js HTTP/1.1", host: "192.168.199.104", referrer: "http://192.168.199.104/login.html"
+2016/11/19 20:53:38 [error] 1553#0: *1 open() "./../nginxd/implementation/themes/project/css/login.css" failed (2: No such file or directory), client: 192.168.199.183, server: localhost, request: "GET /themes/project/css/login.css HTTP/1.1", host: "192.168.199.104", referrer: "http://192.168.199.104/login.html"

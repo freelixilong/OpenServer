@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Please login</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <!-- Theme detector see env.js -->
+        <link rel="stylesheet" id="theme-roller">
+        
+        <script src="/bower_components/modernizr/modernizr.js"></script>
+    </head>
+    <body>
+
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+        <![endif]-->
+        <!-- This rolls with the theme roller -->
+        <div class="login-container">
+            <div class="logo"></div>
+            <div class="input-container">
+                <form id="login_panel" action="/auth/login" method="post">
+                    <table width="200" cellpadding="0" cellspacing="0" class="input-table">
+                        <tr>
+                            <td colspan="2" class="txt_notice" id="notice"></td>
+                        </tr>
+                        <tr>
+                            <td>Username</td>
+                            <td>
+                                <div class="input-field" id="un">
+                                    <input type="text" name="name" onfocus="document.getElementById('un').className='input-field-focus'" onblur="document.getElementById('un').className='input-field'" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Password</td>
+                            <td>
+                                <div class="input-field" id="ps">
+                                    <input type="password" name="password" onfocus="document.getElementById('ps').className='input-field-focus'" onblur="document.getElementById('ps').className='input-field'"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td class="btn_submit"><input id="login_button" type="submit" name="button" value="Login" /></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div class="intro"></div>
+        </div>
+       
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. 
+        <script>
+            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)}(document,'script'));
+        </script>
+        -->
+
+        <!-- build:js scripts/login.js -->
+        <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript">
+            /**
+             * ============================
+             * Theme detector/roller
+             * ============================
+             */
+            var _themeRoller = function(theme){
+                $('#theme-roller').attr('href', '/themes/project/css/login.css');
+                /*$.ajax({
+                    url: '/themes/'+theme+'/login_layout.html',
+                    async: false,
+                    success: function(login_layout){
+                        $('.login-container').replaceWith(login_layout);
+                    },
+                    error: function(msg){
+                        console.log(msg);
+                    }
+                });
+		*/
+            };  
+
+            var themeCatcher = new RegExp('theme=([\\d\\w]*)');
+            var theme = themeCatcher.exec(location.search);
+            if(!theme){
+                theme = ['','_default'];
+            }
+            _themeRoller(theme[1]);
+        </script>
+
+        <script type="text/javascript">
+            $(function(){
+                var error = document.cookie && /error=(.*)(;)?/.exec(document.cookie);
+                error = (error && '<span style="color:red;font-weight:bold;">'+error[1]+'</span>');
+                document.getElementById('notice').innerHTML = error || 'Please login';
+            });
+        </script>
+        <!-- endbuild -->
+
+</body>
+</html>
