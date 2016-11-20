@@ -1,0 +1,53 @@
+//Web Protection->Known Attacks->Signatures
+.signatures-advanced-grid table,
+.signatures-detail table {
+    tr.click {
+        background: #AFD2E9
+    }
+}
+
+.signatures-advanced-grid table {
+    td {
+        min-width: 110px;
+    }
+}
+
+.context-attackssignaturesadvanced {
+    .panel-body.region-menu {
+        padding: 0;
+        .dictionaries-tree {
+            padding-top: 20px;
+            padding-bottom: 10px;
+            overflow-y: auto;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        .popover-content {
+            padding: 3px 6px;
+            .close {
+                margin-left: 20px;
+            }
+            .text-overflow {
+                min-height: 20px;
+                overflow-y: auto;
+                padding: 0px;
+            }
+        }
+    }
+    .row {
+        margin-left: -5px;
+        margin-right: -5px;
+        .col-xs-3, .col-xs-9, .col-xs-4, .col-xs-8 {
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+    }
+    .signatures-detail {
+        .panel-body {
+            #exception-tab-region {
+                overflow-x: auto;
+            }
+            padding:0;
+        }
+    }
+}

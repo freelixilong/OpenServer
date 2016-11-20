@@ -1,0 +1,165 @@
+body { background: #fff; font-family: Verdana, Arial, Helvetica; border: 0; padding: 0; margin: 0; }
+
+img { border: 0px; }
+
+h1 { background: #4b5362 url(../img/icon/bg_sprites_lic.png) repeat-x 0 -88px; color:#fff; font-weight: bold; font-size: 13px; text-align:center; padding:3px; margin: 0; position:fixed; top:0; width:100%; z-index: 1000; }
+h2 { font-weight: bold; font-size: 13px; padding: 5px 5px 0px 5px; border-bottom: 1px solid #ccc; }
+h3 { font-weight: bold; font-size: 13px; margin: 0; }
+
+.dlg { margin: 0; padding-top: 30px; }
+
+.dlg .content {
+    margin: 0;
+    padding: 10px;
+}
+
+.dlg .content div.indent > :first-child { text-indent: 15px; }
+.dlg .content div.indent > input:first-child { margin-left: 15px; }
+.dlg .content div.indent > table { margin-left: 15px; }
+.dlg .content div.indent2 > :first-child { text-indent: 30px; }
+.dlg .content div.indent2 > input:first-child { margin-left: 30px; }
+.dlg .content div.indent2 > table { margin-left: 30px; }
+
+.dlg .field { clear: left; padding: 2px; height: 25px; font-size: 12px; }
+.dlg .field label { display: table-cell; float: left; }
+.dlg .field label:first-child { width: 200px; }
+
+.dlg hr { width: 100%; border: 0; background-color: #dcdcdc; height: 1px; }
+
+.dlg table { border: 20px solid transparent; border-top: 0px; border-bottom: 0px; padding: 0px; background-color: #fff; }
+.dlg table table { width: auto; border: 0; margin: 0; }
+.dlg table td { font-size: 12px; padding-top: 0px; padding-right: 1px; vertical-align: top; white-space: nowrap; }
+.dlg table td.label { width: 0; white-space: nowrap; padding-right: 30px; }
+.dlg table tr td:first-child { width: 0; white-space: nowrap; padding-right: 10px; }
+.dlg table input, select { font-size: 12px; }
+.dlg table .dlg_std_elt {  width: 200px; }
+.dlg table ul { margin: 0; border: 0; padding: 0; }
+.dlg table ul li { list-style-type: none; margin: 0; padding: 0; }
+.dlg table ul.horizontal li { display: inline; padding-right: 15px; white-space: nowrap; }
+
+.dlg .footer { background-color: #f2f6fa; color:#fff; font-weight: bold; font-size: 13px; text-align: center; border: 0; margin: 0; padding: 3px 0; width: 100%; }
+/*
+.dlg .footer input.button { padding: 0px 5px; border:0px; height: 22px; width: 114px; background-image: url(../theme/images/button.gif); background-repeat: no-repeat; background-color:transparent; font-family: "Verdana", "Arial", "Helvetica"; font-size: 12px; font-weight: bold}
+*/
+.dlg .footer input.button, .dlg .footer button.button, .dialog .footer input.button, .dialog .footer button.button, button.button, input.button {
+	width: 9em;
+	margin: .2em 0;
+}
+
+.dlg table.sub-list { width: 100%; border: 1px solid #7f7f7f; vertical-align:middle; font-family: Verdana, Arial, Helvetica; font-size: 12px; background-color: #fff; }
+.dlg table.sub-list thead { background-color: #81868d; }
+.dlg table.sub-list th { background-color: #ccc; color: #000; border-right: 1px solid #fff; border-bottom: 1px solid #7f7f7f; text-align:center; }
+.dlg table.sub-list td { text-align: center; border-right: 1px solid #edf5ff; }
+.dlg table.sub-list tr.odd td { background-color: #edf5ff; border-right: 1px solid #fff; }
+.dlg table.sub-list td.action { border-right: 0; }
+.dlg table.sub-list th.action { border-right: 0; }
+
+/* Tri-state check boxes: */
+.dlg input.checkbox_tri { background: transparent url(../images/tri_greycheck.gif) no-repeat center; height: 13px; width: 13px; margin: 3px 3px; vertical-align: text-bottom; border:0px; cursor: default; font-size: 0px; }
+.dlg input.checkbox_on { background: transparent url(../images/tri_check.gif) no-repeat center; height: 13px; width: 13px; margin: 3px 3px; vertical-align: text-bottom; border:0px; cursor: default; font-size: 0px; }
+.dlg input.checkbox_off { background: transparent url(../images/tri_nocheck.gif) no-repeat center; height: 13px; width: 13px; margin: 3px 3px; vertical-align: text-bottom; border:0px; cursor: default; font-size: 0px; }
+.dlg input.checkbox_on_disabled { background: transparent url(../images/tri_check_disabled.gif) no-repeat center; height: 13px; width: 13px; margin: 3px 3px; vertical-align: text-bottom; border:0px; cursor: default; font-size: 0px; }
+.dlg input.checkbox_off_disabled { background: transparent url(../images/tri_nocheck_disabled.gif) no-repeat center; height: 13px; width: 13px; margin: 3px 3px; vertical-align: text-bottom; border:0px; cursor: default; font-size: 0px; }
+
+.dlg .twistie_collapsed { padding-left: 20px; background: transparent url(../theme/images/twistie_collapsed.gif) no-repeat; cursor: pointer; }
+.dlg .twistie_collapsed:hover { text-decoration: underline; }
+.dlg .twistie_expanded { padding-left: 20px; background: transparent url(../theme/images/twistie_expanded.gif) no-repeat; cursor: pointer; }
+.dlg .twistie_expanded:hover { text-decoration: underline; }
+
+.dlg .action {  }
+.dlg h1 {  }
+#header { position: fixed; top: 0px; }
+#footer { position: fixed; bottom: 0px; }
+
+.dlg_treeview table td {vertical-align:middle; padding-top:1px; }
+.dlg_treeview table tr td:first-child {padding-right:0;}
+
+
+
+.dlgicon { margin: 20px 20px 20px 15px; }
+
+.title {
+    font-size: 14px;
+    font-weight: bold;
+    padding: 5px 0 5px 0;
+    line-height: 20px;
+}
+
+.center {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.qlist td.inline .inline-edit {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.qlist td.inline .inline-edit {
+    display: none;
+}
+.qlist tr.editing td.inline .inline-edit {
+    display: inline;
+}
+.qlist tr.editing td.inline .inline-display {
+    display: none;
+}
+
+.qlist tr.editing {
+    height: 2em;
+}
+
+.qlist tr.editing td.inline .inline-edit:focus {
+    min-width: 50px;
+}
+
+.qlist tr.selected td.inline label.error {
+    color: #FBB;
+}
+
+span.warning_message_inline {
+    display: inline-block;
+    color: #C70000;
+    font-weight: bold;
+}
+
+
+#rate-based td.status {
+    max-width: 100px;
+}
+#rate-based tr.disabled td {
+    background-color: #c2c2c2 ;
+}
+#rate-based tr.selected td {
+    background-color: default !important;
+    color: #000000;
+}
+#rate-based .qlist_hdrbar .ql-menu-container {
+    display: none;
+}
+#rate-based .name, #rate-based .action {
+    text-align: left;
+}
+.dlg.ips-sensor-dlg #rate-based{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
+}
+.dlg.ips-sensor-dlg #rate-based {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1;
+        -ms-flex: 1 1;
+            flex: 1 1;
+}
+.dlg.ips-sensor-dlg #rate-based {
+    min-height: 300px;
+    flex-grow: 2;
+}

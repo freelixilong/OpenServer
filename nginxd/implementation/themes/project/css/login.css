@@ -1,0 +1,115 @@
+/**
+ * Login page style
+ *
+ * @author Yan Zhu
+ *
+ */
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: Verdana,Arial,Helvetica;
+    font-size: 12px;
+    line-height: 1.22em;
+    margin: 0;
+}
+td {
+  font-family: Verdana, Arial, Helvetica;
+  font-size: 12px;
+}
+
+.login-container {
+  padding-top:100px;
+/*  height: 615px;*/
+}
+
+.login-container .input-container {
+  margin: 0px auto;
+/*  width: 334px;
+  height: 615px;
+  margin-top: 100px;*/
+}
+.input-table {
+  margin: 0 auto;
+  border: 0;
+}
+.input-table td {
+  padding: 1px;
+}
+.txt_notice {
+  height: 50px;
+}
+.input-field {
+  width: 210px;
+  height: 28px;
+  background: url(/themes/project/img/icon/bg_login_input_normal.png) no-repeat;
+  padding: 2px 5px 0 5px;
+}
+.input-field input {
+  border: solid 0;
+  width: 200px;
+  height: 22px;
+  line-height: 24px;
+  background: none;
+  outline: none;
+}
+.input-field-focus {
+  width: 210px;
+  height: 28px;
+  background: url(/themes/project/img/icon/bg_login_input_normal.png) no-repeat;
+  padding: 2px 5px 0 5px;
+}
+.input-field-focus input {
+  border: solid 0;
+  width: 200px;
+  height: 22px;
+  line-height: 24px;
+  background: none;
+  outline: none;
+}
+.btn_submit {
+  text-align: right;
+}
+.btn_submit input {
+  width: 72px;
+  height: 30px;
+  padding: 2px 0 3px 0 \9;
+  padding: 2px 0 7px 0;
+  color: #fff;
+  border: none;
+  margin: 5px 25px 0 0;
+  outline: none;
+  cursor: pointer;
+  background: url(/themes/project/img/icon/logon.gif) no-repeat;
+}
+.btn_submit input:hover {
+  background: url(/themes/project/img/icon/logon.gif) no-repeat;
+}
+.btn_submit input :active {
+  background: url(/themes/project/img/icon/logon.gif) no-repeat;
+}
+
+#login_panel {
+    background: url("/themes/project/img/icon/logon_merge.gif") no-repeat scroll center center #FFFFFF;
+    border: 2px solid #999999;
+    height: 164px;
+    margin: 0 auto;
+    overflow: visible;
+    padding: 82px 62px;
+    position: relative;
+    width: 334px;
+}
+
+
+#login_button {
+    background-image: url("/themes/project/img/icon/logon.gif");
+    border: 0 none;
+    color: #FFFFFF;
+    font-weight: bold;
+    height: 28px;
+    margin: 18px 0;
+    width: 60px;
+}

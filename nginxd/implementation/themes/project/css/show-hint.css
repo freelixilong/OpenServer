@@ -1,0 +1,102 @@
+/****************************
+./css/show_hint.css
+Copyright Fortinet, Inc.
+All rights reserved.
+****************************/
+
+.CodeMirror-hints {
+    position: absolute;
+    z-index: 10;
+    overflow: hidden;
+    list-style: none;
+    margin: 0;
+    padding: 2px;
+    -webkit-box-shadow: 2px 3px 5px rgba(0, 0, 0, .2);
+    -moz-box-shadow: 2px 3px 5px rgba(0, 0, 0, .2);
+    box-shadow: 2px 3px 5px rgba(0, 0, 0, .2);
+    border-radius: 3px;
+    border: 1px solid silver;
+    background: white;
+    font-size: 90%;
+    font-family: monospace;
+    max-height: 20em;
+    overflow-y: auto;
+}
+.CodeMirror-hint {
+    margin: 0;
+    padding: 0 4px;
+    border-radius: 2px;
+    overflow: hidden;
+    color: black;
+    cursor: pointer;
+    border-bottom: 1px solid #cccccc;
+    min-width: 19em;
+}
+.CodeMirror-hint-active {
+    background: #ff6633;
+    color: white;
+}
+.CodeMirror-hint-tag {
+    font-weight: bold;
+    padding: 3px 0;
+    max-width: 19em;
+}
+.CodeMirror-hint-desc {
+    font-size: 10px;
+    padding: 2px 0;
+    max-width: 19em;
+    color: #666666;
+}
+.CodeMirror-hint-active .CodeMirror-hint-desc {
+    color: white;
+}
+.CodeMirror-hint-thumb {
+    padding: 3px 5px 3px 0;
+    float: left;
+    width: 64px;
+}
+.CodeMirror-hint-image-tag {
+    float: left;
+    height: 64px;
+    line-height: 64px;
+    font-weight: bold;
+}
+.cm-replacemsg-keywords:hover {
+    background: #08f;
+    color: #fff;
+    box-shadow: 0px 0px 2px #333333;
+    padding: 2px;
+    border-radius: 3px;
+    cursor: help;
+}
+#cm-tag-preview {
+    max-width: 150px;
+    height: auto;
+    position: absolute;
+    box-shadow: 0 0 5px #333333;
+    padding: 5px;
+    display: none;
+    z-index: 99999;
+    background: #ffffff;
+}
+.cm-tag-preview-title {
+    font-weight: bold;
+    border-bottom: #cccccc solid 1px;
+    color: #08f;
+    padding-bottom: 3px;
+}
+.cm-tag-preview-desc {
+    color: #666666;
+    font-size: 12px;
+    border-bottom: #cccccc solid 1px;
+    max-width: 200px;
+    padding: 10px 0;
+}
+.cm-tag-preview-desc img {
+    max-width: 150px;
+}
+.cm-tag-preview-sample {
+    font-weight: bold;
+    font-size: 10px;
+    padding-top: 3px;
+}

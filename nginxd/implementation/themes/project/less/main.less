@@ -9,38 +9,44 @@
  * 3. start tweaking the new theme
  * 4. re-run step.2 whenever you want to update /fonts or have added new icons into /img folders
  *
- * @author Tim Lauv
+ * @author Tim.Liu
  * @created 2014.03.09
  * @updated 2014.07.22
- * @updated 2015.08.12
  */
 
 //jQuery UI minimum
-@import (inline) "jquery-ui/themes/base/jquery.ui.core.css";
-@import (inline) "jquery-ui/themes/base/jquery.ui.resizable.css";
-@import (inline) "jquery-ui/themes/base/jquery.ui.selectable.css";
+@import (inline) "../../../bower_components/jquery-ui/themes/base/jquery.ui.core.css";
+@import (inline) "../../../bower_components/jquery-ui/themes/base/jquery.ui.resizable.css";
+@import (inline) "../../../bower_components/jquery-ui/themes/base/jquery.ui.selectable.css";
 
-//Base - Bootstrap [+ FontAwesome] (icon-fonts are copied by the theme prep tool into /fonts)
-@import "bootstrap/less/bootstrap.less";
-//@import "fontawesome/less/font-awesome.less";
+//Add Lib css
+@import (inline) "../../../bower_components/jQuery-contextMenu/src/jquery.contextMenu.css";
+@import (inline) "../../../bower_components/jqtree/jqtree.css";
+@import (inline) "../../../bower_components/jquery-ui/themes/smoothness/jquery-ui.min.css";
+@import (inline) "../../../bower_components/jqueryui-timepicker-addon/dist/jquery-ui-timepicker-addon.min.css";
+
+//Replacement Message
+@import (inline) "../css/code-mirror.css";
+@import (inline) "../css/replace-msg-view.css";
+@import (inline) "../css/show-hint.css";
+
+//Base - Bootstrap + FontAwesome
+@import "../../../bower_components/fontawesome/less/font-awesome.less";
+@import "../../../bower_components/bootstrap/less/bootstrap.less";
 
 //Base+ - Cosmo theme from Bootswatch
-//@import "bootswatch/cosmo/bootswatch.less";
-//@import "bootswatch/cosmo/variables.less";
+@import "../../../bower_components/bootswatch/cosmo/bootswatch.less";
+@import "../../../bower_components/bootswatch/cosmo/variables.less";
 
 //Animation - animate.css
-@import (inline) "animate.css/animate.css";
+@import (inline) "../../../bower_components/animate.css/animate.css";
 
-//Fonts (fonts are copied by the theme prep tool into /fonts)
-@import "open-sans-fontface/open-sans.less";
-
-//Notification - amaran.css
-@import (inline) "amaranjs/dist/css/amaran.min.css";
-
-//Logo/Icons/Textures
+//Fonts & Logo/Icons
+//Note: Together with bootstrap and fontawesome icon-fonts, fonts are copied by the theme prep tool into /fonts)
+@import "../../../bower_components/open-sans-fontface/open-sans.less";
 //@import "../img/img.less"; //this is produced by the theme prep tool.
 
-//Theming related (font-family, font-face path, color, size and effects)
+//Theming related (color, size and effects)
 @import "vars.less"; //- reusable theme variables (colors, sizes and gaps), modify this to change your theme
 //@import "mixins.less"; //- add more short-cut funcz/stylez into this one
 
@@ -62,7 +68,7 @@ input, select, textarea {
 //==========================================================================================================
 
 
-//@import "theme.less";
+@import "theme.less";
 
 //or put directly here:
 /*

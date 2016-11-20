@@ -1,30 +1,17 @@
 /**
  * Theme variables override
- * @author Tim Lauv
+ * @author Tim.Liu
  * @updated 2014.07.24
  */
 
-//Icon Fonts [+ FontAwesome]
-@icon-font-path: "../fonts/bootstrap/";
-//@fa-font-path: "../fonts/fontawesome";
+//bootstrap vars:
+//@import "../../../bower_components/bootswatch/cosmo/variables.less"; (already in main.less)
 
 //Fonts
+@icon-font-path: "../fonts/bootstrap/";
+@fa-font-path: "../fonts/fontawesome";
 @OpenSansPath: "../fonts/open-sans-fontface";
 @font-family-base: "Open Sans", @font-family-sans-serif;
-
-//Grid (1em gap)
-@grid-gutter-width: @font-size-base;
-
-//Border
-@border-color-base: lighten(@text-color, 60%);
-
-//Radius (Pager, Badge, Label have their own separate radius values)
-@border-radius-base: 0;
-@border-radius-large: 0;
-@border-radius-small: 0;
-//@pager-border-radius: 15px;
-//@badge-border-radius: 10px;
-//.label {border-radius: .25em;} -- already reset to @border-radius-base in components.less
 
 //Navbar
 @navbar-margin-bottom: 0;
@@ -35,5 +22,58 @@
 //** Breadcrumb background color
 @breadcrumb-bg: transparent;
 
-//Notification
-@notification-width-base: auto;
+//Border
+@base-border-color: lighten(@text-color, 60%);
+
+//Custom
+@header-bgcolor-light: #9babb7;
+@header-bgcolor-dark: #4f606d;
+@header-bgcolor-darker: #4D6475;
+@header-bgcolor: #CDD4DA;
+@brand-primary: @header-bgcolor-dark;
+@brand-success: #3CB521;
+@brand-info: @gray-dark;
+@brand-warning: #D47500;
+@brand-danger: #CD0200;
+@text-color: @gray;
+@link-color: @brand-info;
+@link-hover-color: @link-color;
+@padding-base-vertical: 4px;
+@padding-base-horizontal: 12px;
+@padding-large-vertical: 14px;
+@padding-large-horizontal: 16px;
+@border-radius-base: 4px;
+@border-radius-large: 6px;
+@border-radius-small: 3px;
+@table-cell-padding: 5px;
+@table-condensed-cell-padding: 3px;
+@navbar-default-color: #777;
+@navbar-default-bg: #eee;
+@navbar-default-link-color: #777;
+@navbar-default-link-hover-color: @brand-info;
+@navbar-default-link-hover-bg: transparent;
+@navbar-default-link-active-bg: transparent;
+@navbar-default-link-disabled-color: #444;
+@navbar-default-brand-hover-color: @navbar-default-link-hover-color;
+@navbar-default-brand-hover-bg: transparent;
+@navbar-default-toggle-hover-bg: darken(@navbar-default-bg, 6.5%);
+@navbar-default-toggle-icon-bar-bg: #ccc;
+@navbar-default-toggle-border-color: darken(@navbar-default-bg, 6.5%);
+@navbar-inverse-color: #ddd;
+@navbar-inverse-link-color: #ddd;
+@navbar-inverse-link-hover-bg: transparent;
+@navbar-inverse-link-active-bg: transparent;
+@navbar-inverse-link-disabled-color: #ccc;
+@navbar-inverse-brand-hover-bg: transparent;
+@navbar-inverse-toggle-hover-bg: darken(@navbar-inverse-bg, 10%);
+@navbar-inverse-toggle-border-color: darken(@navbar-inverse-bg, 10%);
+@nav-open-link-hover-color: #fff;
+@state-success-text: #468847;
+@state-success-bg: #dff0d8;
+@state-info-text: #3a87ad;
+@state-info-bg: #d9edf7;
+@state-warning-text: #c09853;
+@state-warning-bg: #fcf8e3;
+@state-danger-text: #b94a48;
+@state-danger-bg: #f2dede;
+@font-size-base: 12px;

@@ -1,0 +1,62 @@
+/****************************
+./module_css/replacemsgview.css
+Copyright Fortinet, Inc.
+All rights reserved.
+****************************/
+
+html, body, form, div.dlg {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+.ui-layout-resizer {
+    background: #999999;
+}
+.loading_screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url(../images/loading.gif) center center no-repeat #ffffff;
+    z-index: 1000;
+}
+#menu_pane, #preview_pane, #edit_pane {
+    border: 1px solid #999 !important;
+}
+#preview_pane {
+    overflow: auto;
+}
+#preview_mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.CodeMirror {
+    width: 100%;
+    height: 100%;
+}
+iframe {
+    border: 0;
+    width: 100%;
+    /*height: 100%;*/
+}
+.unknown_tag {
+    color: #dd0000;
+}
+.usage {
+    float: right;
+    margin-top: -22px;
+    padding: 0 5px;
+    font-family: Verdana, Arial, sans-serif;
+    font-weight: bold;
+    font-size: 10px;
+}
+.usage-over {
+    color: #dd0000;
+}
+.msg_info {
+    margin-left: 1em;
+}

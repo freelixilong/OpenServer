@@ -1,0 +1,434 @@
+.appmenu {
+    .menu {
+        // padding-top: 15px;
+        ul {
+            list-style: none;
+            cursor: pointer;
+            list-style-position: outside;
+            padding-left: 20px;
+            padding-right: 8px;
+            background-image: url("/themes/project/img/icon/menu_bak.png");
+            background-repeat: repeat-y;
+            &.tree {
+                margin-top: 3px;
+                li > a {
+                    text-decoration: none;
+                    color: @text-color;
+                }
+                > li {
+                    margin-bottom: 5px;
+                    > a {
+                        border-radius: 10px;
+                        padding: 6px 20px;
+                        margin-bottom: 5px;
+                        background-color: #638198;
+                        #gradient > .vertical(@header-bgcolor-light;
+                        @header-bgcolor-dark);
+                        border: 1px solid #5D6F7D;
+                        border-radius: 7px;
+                        box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+                        box-sizing: border-box;
+                        color: #FFFFFF;
+                        display: block;
+                        line-height: 18px;
+                        text-align: left;
+                        vertical-align: middle;
+                        width: 100%;
+                    }
+                    > a:hover,
+                    > a.selected {
+                        background: none repeat scroll 0 0 #4D6475;
+                        #gradient > .vertical(@header-bgcolor-dark;
+                        @header-bgcolor-darker);
+                        border: 1px solid #5D6F7D;
+                        color: #FFFFFF;
+                        text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+                    }
+                    > ul {
+                        padding-left:3px;
+                        background-image:none;
+                    }
+                }
+            }
+        }
+
+        ul.tree-root{
+            padding-left:3px;
+            background-image:none;
+        }
+        ul.last{
+            background-image:none;
+        }
+        .ygtvlabel {
+            background: url("../img/icon/navbar-icon-sprites.png") no-repeat scroll 0 -22px rgba(0, 0, 0, 0);
+            background-repeat: no-repeat;
+            display: inline-block;
+            height: 22px;
+            line-height: 22px;
+            vertical-align: text-top;
+            width: 18px;
+            margin-top: -3px;
+        }
+        .l2_menu_status {
+            background-position: 0 -44px;
+        }
+        .l2_menu_certificate {
+            background-position: 0 -528px;
+        }
+        .l2_menu_wizard {
+            background-position: 0 -3432px;
+        }
+        .l2_menu_waf_user_group {
+            background-position: 0 -2420px;
+        }
+        .l2_menu_waf_local_user {
+            background-position: 0 -2244px;
+        }
+        .l2_menu_waf_ldap_user {
+            background-position: 0 -2244px;
+        }
+        .l2_menu_waf_radius_user {
+            background-position: 0 -2244px;
+        }
+        .l2_menu_waf_ntlm_user {
+            background-position: 0 -2244px;
+        }
+        .l2_menu_waf_remote_user {
+            background-position: 0 -2244px;
+        }
+        .l2_menu_lblpolicy {
+            background-position: 0 -968px;
+        }
+        .l2_menu_server {
+            background-position: 0 -242px;
+        }
+        .l2_menu_server_objects {
+            background-position: 0 -242px;
+        }
+        .l2_menu_lblmonitor {
+            background-position: 0 -924px;
+        }
+        .l2_menu_lblservice {
+            background-position: 0 -264px;
+        }
+        .l2_menu_waf_allow_hosts {
+            background-position: 0 -1412px;
+        }
+        .l2_menu_waf_pattern {
+            background-position: 0 -1056px;
+        }
+        .l2_menu_custom_pattern {
+            background-position: 0 -2376px;
+        }
+        .l2_menu_custom_application {
+            background-position: 0 -2002px;
+        }
+        .l2_menu_xml_period_time {
+            background-position: 0 -1166px;
+        }
+        .l2_menu_apppschemafile {
+            background-position: 0 -1166px;
+        }
+        .l2_menu_xml_filter_rule {
+            background-position: 0 -1694px;
+        }
+        .l2_menu_xml_ip_rule {
+            background-position: 0 -1716px;
+        }
+        .l2_menu_xml_wsdl_routing {
+            background-position: 0 -792px;
+        }
+        .l2_menu_xml_key {
+            background-position: 0 -2398px;
+        }
+        .l2_menu_wad {
+            background-position: 0 -2948px;
+        }
+        .l2_menu_wvs {
+            background-position: 0 -3388px;
+        }
+        .l2_menu_logpolicy {
+            background-position: 0 -968px;
+        }
+        .l2_menu_reportconfig {
+            background-position: 0 -2882px;
+        }
+        .l2_menu_reportbrowse {
+            background-position: 0 -3036px;
+        }
+        .l2_menu_dashboard {
+            background-position: 0 -44px;
+        }
+        .l2_menu_vdom {
+            background-position: 0 -3256px;
+        }
+        .l2_menu_network {
+            background-position: 0 -110px;
+        }
+        .l2_menu_dhcp {
+            background-position: 0 -242px;
+        }
+        .l2_menu_sys_config {
+            background-position: 0 -308px;
+        }
+        .l2_menu_admin {
+            background-position: 0 -418px;
+        }
+        .l2_menu_certification {
+            background-position: 0 -528px;
+        }
+        .l2_menu_maintenance {
+            background-position: 0 -638px;
+        }
+        .l2_menu_dynamicprofile {
+            background-position: 0 -3300px;
+        }
+        .l2_menu_static {
+            background-position: 0 -770px;
+        }
+        .l2_menu_route_dynamic {
+            background-position: 0 -814px;
+        }
+        .l2_menu_route_mon {
+            background-position: 0 -924px;
+        }
+        .l2_menu_firewallpolicy {
+            background-position: 0 -968px;
+        }
+        .l2_menu_address {
+            background-position: 0 -1056px;
+        }
+        .l2_menu_service {
+            background-position: 0 -264px;
+        }
+        .l2_menu_schedule {
+            background-position: 0 -1166px;
+        }
+        .l2_menu_traffic_shaper {
+            background-position: 0 -1254px;
+        }
+        .l2_menu_vip {
+            background-position: 0 -1320px;
+        }
+        .l2_menu_ldb {
+            background-position: 0 -1386px;
+        }
+        .l2_menu_antivirus {
+            background-position: 0 -1474px;
+        }
+        .l2_menu_ids {
+            background-position: 0 -1584px;
+        }
+        .l2_menu_webfilter {
+            background-position: 0 -1672px;
+        }
+        .l2_menu_spamfilter {
+            background-position: 0 -1826px;
+        }
+        .l2_menu_data_leak_prevention {
+            background-position: 0 -1914px;
+        }
+        .l2_menu_app_control {
+            background-position: 0 -2002px;
+        }
+        .l2_menu_voip {
+            background-position: 0 -3322px;
+        }
+        .l2_menu_icap {
+            background-position: 0 -3456px;
+        }
+        .l2_menu_carrier {
+            background-position: 0 -3344px;
+        }
+        .l2_menu_profile_grp {
+            background-position: 0 -3366px;
+        }
+        .l2_menu_ipsec {
+            background-position: 0 -2068px;
+        }
+        .l2_menu_ssl {
+            background-position: 0 -2156px;
+        }
+        .l2_menu_user {
+            background-position: 0 -2244px;
+        }
+        .l2_menu_usergrp {
+            background-position: 0 -2420px;
+        }
+        .l2_menu_remote {
+            background-position: 0 -2288px;
+        }
+        .l2_menu_ftoken {
+            background-position: 0 -3410px;
+        }
+        .l2_menu_userfsaelist {
+            background-position: 0 -2376px;
+        }
+        .l2_menu_pki {
+            background-position: 0 -2398px;
+        }
+        .l2_menu_monitor {
+            background-position: 0 -924px;
+        }
+        .l2_menu_wan_rule {
+            background-position: 0 -3102px;
+        }
+        .l2_menu_wan_peer {
+            background-position: 0 -3124px;
+        }
+        .l2_menu_wanopt_monitor {
+            background-position: 0 -924px;
+        }
+        .l2_menu_wanopt_cache {
+            background-position: 0 -3168px;
+        }
+        .l2_menu_endpointcompliance_nac {
+            background-position: 0 -308px;
+        }
+        .l2_menu_endpointcompliance_netscan {
+            background-position: 0 -3388px;
+        }
+        .l2_menu_endpointcompliance_monitor {
+            background-position: 0 -924px;
+        }
+        .l2_menu_ac_wireless_network {
+            background-position: 0 -3278px;
+        }
+        .l2_menu_ac_managed_ap {
+            background-position: 0 -2596px;
+        }
+        .l2_menu_ac_monitor {
+            background-position: 0 -924px;
+        }
+        .l2_menu_logconfig {
+            background-position: 0 -2684px;
+        }
+        .l2_menu_logaccess {
+            background-position: 0 -2772px;
+        }
+        .l2_menu_log_archive {
+            background-position: 0 -2904px;
+        }
+        .l2_menu_report_config {
+            background-position: 0 -2970px;
+        }
+        .l2_menu_report_access {
+            background-position: 0 -3036px;
+        }
+        .l2_menu_report_auto_profiling {
+            background-position: 0 -3430px;
+        }
+        .l2_menu_log_mon {
+            background-position: 0 -924px;
+        }
+        .l2_menu_waf_profile {
+            background-position: 0 -2706px;
+        }
+        .l2_menu_apppprofile {
+            background-position: 0 -2750px;
+        }
+        .l2_menu_waf_global_white {
+            background-position: 0 -2794px;
+        }
+        .l2_menu_robot {
+            background-position: 0 -2618px;
+        }
+        .l2_menu_error_page {
+            background-position: 0 -616px;
+        }
+        .l2_menu_waf_url_rewrite {
+            background-position: 0 -902px;
+        }
+        .l2_menu_waf_authen_policy {
+            background-position: 0 -2288px;
+        }
+        .l2_menu_waf_file_compression {
+            background-position: 0 -748px;
+        }
+        .l2_menu_known_attacks {
+            background-position: 0 -1584px;
+        }
+        .l2_menu_input_validation {
+            background-position: 0 -1518px;
+        }
+        .l2_menu_protocol {
+            background-position: 0 -1254px;
+        }
+        .l2_menu_access {
+            background-position: 0 -550px;
+        }
+        .l2_menu_waf_app_layer_dos_pre {
+            background-position: 0 -2618px;
+        }
+        .l2_menu_network {
+            background-position: 0 -2596px;
+        }
+        .l2_menu_dos_protection_policy {
+            background-position: 0 -2662px;
+        }
+        .l2_menu_waf_autolearning {
+            background-position: 0 -1802px;
+        }
+        .l2_menu_autolearn_report {
+            background-position: 0 -1956px;
+        }
+        .l2_menu_application_templates {
+            background-position: 0 -1802px;
+        }
+        .l2_menu_advanced_protection {
+            background-position: 0 -2552px;
+        }
+        .l2_menu_ip_intelligence {
+            background-position: 0 -2486px;
+        }
+        .l2_menu_global {
+            background-position: 0 -3454px;
+        }
+        .l2_menu_x_forwarded_for {
+            background-position: 0 -1254px;
+        }
+        .l2_menu_prot_site_publish {
+            background-position: 0 -2068px;
+        }
+        .l2_menu_system {
+            background-position: 0 -396px
+        }
+        .l2_menu_log {
+            background-position: 0 -66px
+        }
+        .l2_menu_waf_web_cache {
+            background-position: 0 -3168px
+        }
+        .l2_menu_vdom {
+            background-position: 0 -3256px;
+        }
+        .l2_menu_vdom_name {
+            background-position: 0 -3256px;
+        }
+        .l2_menu_loadbalance {
+            background-position: 0 -968px
+        }
+        .l2_menu_application_delivery {
+            background-position: 0 -990px
+        }
+        .l2_menu_waf {
+            background-position: 0 -2926px
+        }
+        .l2_menu_dos_protection {
+            background-position: 0 -2838px
+        }
+        .l2_menu_autolearn {
+            background-position: 0 -1518px
+        }
+    }
+    .region-policymenu {
+        .panel {
+            margin-bottom: 0px;
+            .panel-heading {
+                #gradient > .vertical(@header-bgcolor-light;
+                @header-bgcolor-dark);
+            }
+            .panel-body {}
+        }
+    }
+}

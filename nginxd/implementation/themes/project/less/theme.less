@@ -1,0 +1,162 @@
+// @import "btn.less";
+@import "menu.less";
+@import "navbar.less";
+@import "attackssignatures.less";
+@import "autolearnreport.less";
+@import "status.less";
+@import "grid.less";
+@import "loglevel.less";
+@import "submenu.less";
+@import "icon.less";
+@import "widget.less";
+@import "policy.less";
+body {
+    background-color: @header-bgcolor;
+}
+
+.application-container {
+    .main {
+        .appmenu {
+            width: 250px;
+            float: left;
+        }
+        .appcontent {
+            .context {
+                padding: 15px 5px;
+            }
+            .region-form > div,
+            .central-form > div {
+                background-color: #FFFFFF;
+                //border: 3px solid #e6e6e6;
+                //border-radius: 6px;
+                //margin: 40px 0 0;
+                margin: 0;
+                padding: 3px 20px;
+                .region-form > div, .central-form > div {
+                    background: #eee
+                }
+            }
+            .form-group {
+                margin-bottom: 0px;
+            }
+            .navbar {
+                min-height: 30px;
+            }
+            .panel-heading {
+                #gradient > .vertical(@header-bgcolor-light;
+                @header-bgcolor-dark);
+            }
+            .region-templatecontent {
+                .panel-heading {
+                    #gradient > .vertical(#F4F7FB;
+                    #C7DAED);
+                    padding: 3px 15px;
+                }
+            }
+            .nav,
+            .nav-tabs {
+                #gradient > .vertical(@header-bgcolor-light;
+                @header-bgcolor-dark);
+            }
+        }
+        .appmenu,
+        .appcontent {
+            background: #fff;
+            border: 1px solid @header-bgcolor-dark;
+            border-radius: 4px;
+            overflow-y: auto;
+        }
+        .navbar {
+            margin-bottom: 1px;
+        }
+    }
+}
+
+.notify-unit {
+    overflow: hidden;
+    word-wrap: break-word;
+}
+
+.alert {
+    padding: 15px;
+    margin-bottom: 17px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.alert-dismissable {
+    padding-right: 35px;
+}
+.list_sprite {
+    background: rgba(0, 0, 0, 0) url("../img/icon/tool_sprites.png") no-repeat scroll 0 0;
+    display: inline-block;
+    height: 16px;
+    min-width: 16px;
+    width: 16px;
+}
+.tool_edit {
+    background-position: 0 -16px;
+}
+i.glyphicon {
+    font-size: 16px;
+}
+/*
+.context-abc {
+    //for context named Abc
+}
+*/
+
+.group-devices .border , .group-devices .heading{
+    border-color: #CCCCCC;
+}
+
+//theme from old main.css
+
+.table > thead > tr.headinfo {
+    color: rgba(18, 17, 17, 0.69);
+    background-color: #d9edf7;
+}
+
+.close {
+  color: #000000;
+}
+
+.close:hover,.close:focus {
+  color: #000000;
+}
+
+.date-time-editor {
+    .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    .form-control {
+        padding: 5px;
+    }
+}
+
+.cookie-security-policy{
+    .fieldset {
+        margin-bottom: 1.5em;
+        legend {
+            font-weight: bold;
+        }
+    }
+}
+
+.simple-form {
+    .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+        padding-left: 5px;
+        padding-right: 0px;
+    }
+    .form-control {
+        padding: 2px;
+        height: 24px;
+    }
+    .control-label {
+        font-weight: normal;
+        text-align: right;
+        line-height: 24px;
+        vertical-align: middle;
+    }
+}

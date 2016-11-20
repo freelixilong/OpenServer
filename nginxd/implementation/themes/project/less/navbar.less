@@ -1,0 +1,107 @@
+.appnavbar {
+    #gradient > .vertical(@header-bgcolor-light;
+    @header-bgcolor-dark);
+    margin-bottom: 1px;
+    .page-header {
+        margin: 0px;
+        border: none;
+        padding: 20px 0;
+        .title {
+            padding: 0 0 0 70px;
+            background: url(../img/icon/ico_fortinet.png) 30px 8px no-repeat;
+            color: #FFFFFF;
+            font-size: @font-size-h2;
+            font-weight: 700;
+        }
+    }
+    .navbar-default.navbar {
+        background: none;
+        border: none;
+        margin-bottom: 0;
+        margin-top: -50px;
+        padding: 0;
+        margin-left: 450px;
+        .collapse.navbar-collapse {
+            margin-top: 13px;
+            .nav-tabs {
+                > li {
+                    > a {
+                        color: #FFFFFF;
+                        border-bottom: 0px solid #dddddd;
+                        background-color: @header-bgcolor-darker;
+                        border-top-left-radius: 10px;
+                        border-top-right-radius: 10px;
+                    }
+                    > a.selected {
+                        color: #000000;
+                        border-bottom: 0px solid #dddddd;
+                        background-color: #FFFFFF;
+                        border-top-left-radius: 10px;
+                        border-top-right-radius: 10px;
+                    }
+                }
+            }
+        }
+        .navbar-nav {
+            > li {
+                #gradient > .vertical(@header-bgcolor-light;
+                @header-bgcolor-dark);
+                border-radius: 15px 15px 0 0;
+                font-size: @font-size-small;
+                color: #fff
+            }
+            > li.gateways {
+                padding: 7px 7px 0px 7px;
+                margin: 0px 16px 0 0;
+                .form-group {
+                    margin: 0;
+                    .control-label {
+                        float: left;
+                        padding-top: 0;
+                        margin-right: 5px;
+                    }
+                    .form-control {
+                        font-size: @font-size-small;
+                        padding: 0;
+                        margin: 0;
+                        height: 20px;
+                        border: none;
+                        min-width: 80px;
+                    }
+                }
+                .form-group > div {
+                    float: left;
+                }
+                select.form-group {
+                    font-size: @font-size-small;
+                }
+            }
+            > li.user {
+                padding: 3px 7px 4px 7px;
+            }
+            > li > a {
+                display: inline;
+                line-height: 30px;
+                #gradient > .vertical(#FEFEFE;
+                #FEFEFE);
+                border-radius: 8px;
+                color: #666666;
+                padding: 2px 10px;
+                text-decoration: none;
+            }
+            > li > a:hover,
+            .navbar-nav > li > a:link {
+                display: inline;
+                background: none;
+                height: auto;
+                background-color: #EFEFEF;
+                #gradient > .vertical(#FEFEFE;
+                #FEFEFE);
+                border-radius: 8px;
+                color: #666666;
+                padding: 2px 10px;
+                text-decoration: none;
+            }
+        }
+    }
+}
