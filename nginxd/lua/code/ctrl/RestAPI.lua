@@ -97,7 +97,7 @@ function RestAPI:post()
     if contentType then 
         isFile = string.find(request:getHeader("Content-Type"), "multipart")
     end
-    local context,module, id, subModule, subId = uri:match("^/api/v1.0/([%w]+)/([%w%s_-]+)/([%w%s_-]+)/([%w%s-_]+)/([%w%s-_]+)/?(.*)$")
+    local payload = Request:getPayload()
     if not context or not module then
         ngx.exit(ngx.HTTP_BAD_REQUEST)
     end

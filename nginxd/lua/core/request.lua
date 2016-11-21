@@ -15,10 +15,15 @@ end
 local function parseUri(uri, data)
     local root, menu, subMenu = nil, nil, nil
     local method = ngx.var.request_method:lower()
-    local root, module, id, subModule, subId, granMod = uri:match("^/([%w_-]+)/([%w_-]+)/?([^/]*)/?(%w*)/?([%w%s-_]*)/?(.*)$")
+    local root, departId, sectionId, titleId = uri:match("^/([%w_-]+)/([%w_-]+)/?([%w%s-_]*)/?([%w%s-_]*)")
+    --http://localhost/api/v1.0
+    --http://localhost/data/departId/sectionId/titleId
 
     if root == "data" and module and method then
         data.action = {"Object", method}
+        data.params["departId"]    = departId
+        data.params["sectionId"] = sectionId
+        data.params["titleId"]     = titleId
     elseif root == "auth" and module then
         if module == "login" or module == "logout" then
             data.action = {"User", method}
@@ -26,11 +31,6 @@ local function parseUri(uri, data)
     elseif root == "api" and module then
         data.action = {"RestAPI", method}
     end
-
-    data.params["module"]    = module
-    data.params["id"]        = id
-    data.params["subModule"] = subModule
-    data.params["subId"]     = subId
 end
 
 -- @return table (Hash mode)
