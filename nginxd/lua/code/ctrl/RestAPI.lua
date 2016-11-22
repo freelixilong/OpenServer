@@ -5,7 +5,6 @@ local response = loadMod("core.response")
 local ctrlBase = loadMod("core.base.ctrl")
 local restAPIMap = loadMod("config.restAPIMap")
 local sysConf = loadMod("config.system")
-local deviceService = util:getService("device")
 local ObjectService = util:getService("object")
 local UserService = util:getService("user")
 local menuService = util:getService("menu")
@@ -69,19 +68,15 @@ function RestAPI:get()
     ngx.log(ngx.DEBUG, "RestAPI get: ", ngx.var.uri)
 
     local admin = self:authorizationCheck()
-
     local res, header
-    local uri = ngx.var.uri
     local args = request:getArgsTbl()
-    local context, module, id, subModule, subId = uri:match("^/api/v1.0/([%w]+)/([%w%s-_]+)/?([^/]*)/?([%w%s-_]*)/?([%w%s-_]*)/?(.*)$")
-    if not context or not module then
-        ngx.exit(ngx.HTTP_BAD_REQUEST)
-    end
-
+    local payload = Request:getPayload()
+    local jsonObj = util:jsonDecode(payload)
+    ngx.log(ngx.DEBUG, "RestAPI get: ", payload)
     --restFulAPICheck(context .. '/' .. parentTable .. '/' .. table .. '/' .. module, ngx.HTTP_GET)
     --accessProfileCheck(admin, module, 'get')
    
-    res, header = ObjectService:get(module, args, id, subModule)
+    res, header = ObjectService:get(jsonObj.mkey, jsonObj.subKey, args, jsonObj.data)
 
     response:reply(res, header)
 end
@@ -91,20 +86,19 @@ function RestAPI:post()
     local user = self:authorizationCheck()
     local res, status
     local isFile
-    local uri = ngx.var.uri
     local args = request:getArgsTbl()
     local contentType = request:getHeader("Content-Type")
     if contentType then 
         isFile = string.find(request:getHeader("Content-Type"), "multipart")
     end
     local payload = Request:getPayload()
-    if not context or not module then
-        ngx.exit(ngx.HTTP_BAD_REQUEST)
-    end
-
+  
+    ngx.log(ngx.DEBUG, "RestAPI post: ", payload)
+    local jsonObj = util:jsonDecode(payload)
+    --http://localhost/api/v1.0
     --restFulAPICheck(context .. '/' .. parentTable .. '/' .. table .. '/' .. module, ngx.HTTP_POST)
     --accessProfileCheck(user, module, 'post')
-    res, status = ObjectService:post(module, args, request:getPayload(), id, subModule, isFile)
+    res, status = ObjectService:post(jsonObj.mkey, jsonObj.subKey, args, jsonObj.data, isFile)
 
     response:reply(res, nil, status)
 end
@@ -113,16 +107,13 @@ function RestAPI:put()
     ngx.log(ngx.DEBUG, "RestAPI put: ", ngx.var.uri)
     local admin = self:authorizationCheck()
     local res
-    local uri = ngx.var.uri
     local args = request:getArgsTbl()
-    local context, module, id, subModule, subId = uri:match("^/api/v1.0/([%w]+)/([%w%s-_]+)/?([^/]*)/?([%w%s-_]*)/?([%w%s-_]*)/?(.*)$")
-    if not context or not module then
-        ngx.exit(ngx.HTTP_BAD_REQUEST)
-    end
-
+    local payload = Request:getPayload()
+    local jsonObj = util:jsonDecode(payload)
+    ngx.log(ngx.DEBUG, "RestAPI put: ", payload)
     --restFulAPICheck(context .. '/' .. parentTable .. '/' .. table .. '/' .. module, ngx.HTTP_PUT)
     --accessProfileCheck(admin, module, 'put')
-    res, status = ObjectService:put(module, args, request:getPayload(), id, subModule, subId)
+    res, status = ObjectService:put(jsonObj.mkey, jsonObj.subKey, args, jsonObj.data, isFile)
     response:reply(res, nil, status)
 end
 
@@ -132,15 +123,14 @@ function RestAPI:delete()
     local res
     local uri = ngx.var.uri
     local args = request:getArgsTbl()
-    local context, module, id, subModule, subId = uri:match("^/api/v1.0/([%w]+)/([%w%s-_]+)/?([^/]*)/?([%w%s-_]*)/?([%w%s-_]*)/?(.*)$")
-    if not context or not module then
-        ngx.exit(ngx.HTTP_BAD_REQUEST)
-    end
-
+    local payload = Request:getPayload()
+    local jsonObj = util:jsonDecode(payload)
+    
+    ngx.log(ngx.DEBUG, "RestAPI put: ", payload)
     --restFulAPICheck(context .. '/' .. parentTable .. '/' .. table .. '/' .. module, ngx.HTTP_DELETE)
     --accessProfileCheck(admin, module, 'delete')
 
-    res = ObjectService:delete(module, args, nil, id, subModule, subId)
+    res = ObjectService:delete(jsonObj.mkey, jsonObj.subKey, args, jsonObj.data)
     response:reply(res)
 end
 
