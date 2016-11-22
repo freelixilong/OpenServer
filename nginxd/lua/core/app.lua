@@ -68,6 +68,7 @@ end
 
 -- router init and dispatch
 function App:run()
+    ngx.log(ngx.DEBUG, "App:run hello = ")
     local status, err = pcall(function()
         self:init()
         self:route()

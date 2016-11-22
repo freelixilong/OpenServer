@@ -7,8 +7,6 @@ local restAPIMap = loadMod("config.restAPIMap")
 local sysConf = loadMod("config.system")
 local ObjectService = util:getService("object")
 local UserService = util:getService("user")
-local menuService = util:getService("menu")
-
 
 require "bit"
 
@@ -125,7 +123,7 @@ function RestAPI:delete()
     local args = request:getArgsTbl()
     local payload = Request:getPayload()
     local jsonObj = util:jsonDecode(payload)
-    
+
     ngx.log(ngx.DEBUG, "RestAPI put: ", payload)
     --restFulAPICheck(context .. '/' .. parentTable .. '/' .. table .. '/' .. module, ngx.HTTP_DELETE)
     --accessProfileCheck(admin, module, 'delete')
