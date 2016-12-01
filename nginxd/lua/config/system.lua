@@ -1,8 +1,8 @@
---@ author: zhouxuehao
---@ date: 2015-4-7
---@ App config
 
 return {
+    PROXY_BROWSER                     = "127.0.0.1",
+    PROXY_PORT                        = "8088",
+
     DEBUG_MODE                        = false,
     SERVER_MARK                       = "cmgm",
     LOCKER_TIMEOUT                    = 6,
@@ -104,22 +104,5 @@ return {
             proxyURL           = "/cmgm/***",
             inMongodb          = true,
         },
-    },
-
-
-    supportMoveTable = {
-        ["HTTPContentRoutingPolicySub"]    = true,
-        ["FileUploadRestrictionPolicySub"] = true,
-        ["AuthenticationServerPoolSub"]    = true,
-        ["UserGroupSub"]                   = true,
-        ["FireWallPolicy"]                 = true,
-        ["AdminGroupSub"]                  = true,
-        ["ApplicationPolicySub"]           = true,
-        ["PageAccessSub"]                  = true,
-        ["URLAccessPolicySub"]             = true,
-        ["CustomPolicySub"]                = true,
-        ["CustomSignatureGroupSub"]        = true,
-        ["URLRewritingPolicySub"]          = true,
-        ["PolicyPackageSub"]               = true,
     },
 }

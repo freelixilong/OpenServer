@@ -17,7 +17,7 @@ local function parseUri(uri, data)
     local method = ngx.var.request_method:lower()
     local root, departId, sectionId, titleId = uri:match("^/([%w_-]+)/([%w_-]+)/?([%w%s-_]*)/?([%w%s-_]*)")
     --http://localhost/api/v1.0
-    --http://localhost/data/departId/sectionId/titleId
+    --http://localhost/data/departId/sectionId(composed)/titleId
 
     if root == "data" and module and method then
         data.action = {"Object", method}

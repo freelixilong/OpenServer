@@ -37,6 +37,7 @@ function Util:splitStr(str, token) --should put it in string file
     if str == nil then
         return t
     end
+    local len = string.len(str)
     while true do
         j = string.find(str, token, i)
         if j ~= nil then
@@ -44,6 +45,10 @@ function Util:splitStr(str, token) --should put it in string file
             table.insert(t, s)
             i = j + 1
         else
+            if i ~= len then
+                local s = string.sub(str, i, -1)
+                table.insert(t, s)   
+            end
             break
         end
     end
@@ -141,10 +146,9 @@ function Util:getService(name)
     return service
 end
 
-
 --@ resturn jsonStr from restApi server
-function Util:proxy(uri, args, postData, method)
-    local params = type(args) == "table" and {args = args, method = method} or {method = method,}
+function Util:proxy(uri, args, postData, headers, method)
+    local params = type(args) == "table" and {args = args, method = method, headers = headers} or {method = method, headers = headers}
     uri = type(args) == "string" and uri .. "?" ..  args or uri
     if postData then
         if self:isTable(postData) then
@@ -153,7 +157,8 @@ function Util:proxy(uri, args, postData, method)
             params.body = tostring(postData)
         end
     end
-
+    ngx.log(ngx.DEBUG, "set header:", self:jsonEncode(ngx.req.headers))
+    --setProxyHeader(headers)
     local res = ngx.location.capture(uri, params)
     ngx.status = res.status
     
@@ -333,6 +338,10 @@ end
 
 function Util:base64Encode(str)
     return ngx.encode_base64(str)
+end
+
+function Util:base64Decode(str)
+    return ngx.decode_base64(str)
 end
 
 -- launch a http file upload  request to the upstream
