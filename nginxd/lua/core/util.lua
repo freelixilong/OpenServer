@@ -147,8 +147,8 @@ function Util:getService(name)
 end
 
 --@ resturn jsonStr from restApi server
-function Util:proxy(uri, args, postData, headers, method)
-    local params = type(args) == "table" and {args = args, method = method, headers = headers} or {method = method, headers = headers}
+function Util:proxy(uri, args, postData, method)
+    local params = type(args) == "table" and {args = args, method = method} or {method = method}
     uri = type(args) == "string" and uri .. "?" ..  args or uri
     if postData then
         if self:isTable(postData) then
@@ -157,7 +157,7 @@ function Util:proxy(uri, args, postData, headers, method)
             params.body = tostring(postData)
         end
     end
-    ngx.log(ngx.DEBUG, "set header:", self:jsonEncode(ngx.req.headers))
+    --ngx.log(ngx.DEBUG, "set header:", self:jsonEncode(ngx.req.headers))
     --setProxyHeader(headers)
     local res = ngx.location.capture(uri, params)
     ngx.status = res.status
