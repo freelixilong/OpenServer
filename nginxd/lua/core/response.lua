@@ -1,5 +1,3 @@
---@ author: zhouxuehao
---@ date: 2015-4-7
 --@ response wrap utility
 local json = require("cjson")
 local util = loadMod("core.util")

@@ -20,21 +20,10 @@ end
 function CtrlBase:proxyProc(uri, method)
 	local headers = ngx.req.get_headers()
 
-	--headers["uri"]= uri
-
-
-	--headers["Accept"]= "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
-	--headers["Accept-Encoding"]= "gzip, deflate"
-	--headers["Accept-Language"]= "zh-CN,zh;q=0.8"
-	--headers["Connection"]= "keep-alive"
-	--headers["X-Requested-With"]= "XMLHttpRequest"
-	--headers["User-Agent"]= "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:49.0) Gecko/20100101 Firefox/49.0"
-	--headers["Referer"]= "http://10.100.10.223/"
 	ngx.req.set_header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
-	--ngx.req.set_header("Accept-Encoding", "gzip, deflate")
+	
 	ngx.req.set_header("Accept-Language", "zh-CN,zh;q=0.8")
-	--ngx.req.set_header("Connection", "keep-alive")
-	--ngx.req.set_header("X-Requested-With", "gzip, deflate")
+	
 	--ngx.req.set_header("User-Agent", "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:49.0) Gecko/20100101 Firefox/49.0")
 	ngx.req.set_header("Referer", "http://10.100.10.223/")
 	ngx.req.set_header("path", uri)
@@ -43,7 +32,7 @@ function CtrlBase:proxyProc(uri, method)
 	ngx.log(ngx.DEBUG, "host:   ", request:getHeader("host"))
 	ngx.log(ngx.DEBUG, "path:   ", uri)
 	strCookie = "proxyIP=" .. sysConf.PROXY_BROWSER .. ";proxyPort=".. sysConf.PROXY_PORT .. ";"
-	strCookie = strCookie .. "site="..request:getHeader("host") ..";path="..uri..";"
+	strCookie = strCookie .. "site="..request:getHeader("host") ..";"
     ngx.req.set_header("Cookie", strCookie)
     ngx.req.clear_header("host")
 	return util:proxy("/proxy/index.html", ngx.var.args, request:getPayload(), method)
@@ -61,7 +50,9 @@ function CtrlBase:getSessionInfo(accFlag)
     	if user == "scrapy" and pass == "scrapy.123" then
     		ngx.req.clear_header("Proxy-Authorization")
     		local body, header = self:proxyProc(ngx.var.uri, ngx.HTTP_GET)
-		    return body, header
+    		response:reply(body, header)
+    		ngx.log(ngx.DEBUG, "reply header:", util:jsonEncode(header))
+		    return {}
 		else
 			response:reply({msg = "error proxy name and user!"}, nil, 500)
     	end
