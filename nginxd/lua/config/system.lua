@@ -1,6 +1,6 @@
 
 return {
-    PROXY_BROWSER                     = "127.0.0.1",
+    PROXY_BROWSER                     = "59.110.47.98",
     PROXY_PORT                        = "8088",
 
     DEBUG_MODE                        = false,

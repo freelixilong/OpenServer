@@ -25,7 +25,7 @@ function CtrlBase:proxyProc(uri, method)
 	ngx.req.set_header("Accept-Language", "zh-CN,zh;q=0.8")
 	
 	--ngx.req.set_header("User-Agent", "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:49.0) Gecko/20100101 Firefox/49.0")
-	ngx.req.set_header("Referer", "http://10.100.10.223/")
+	ngx.req.set_header("Referer", sysConf.PROXY_BROWSER)
 	ngx.req.set_header("path", uri)
 	ngx.req.set_header("site", request:getHeader("host"))
 
