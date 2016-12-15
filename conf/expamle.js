@@ -48,6 +48,7 @@ var gov = {
                 }
             ],            
 		},
+		nextPageXpath:["#container > div.lbox.container > table > tbody > tr > td > div > ul > li:nth-child(6) > a",],
 	},
 };
 
