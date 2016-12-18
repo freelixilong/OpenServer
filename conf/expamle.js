@@ -6,6 +6,7 @@ var gov = {
 	link : "http://www.bjpc.gov.cn/",
 	area : "北京",
 	condition : '//*[@id="container"]/div[6]/h1', 
+        nextPageXpath:["#container > div.lbox.container > table > tbody > tr > td > div > ul > li:nth-child(6) > a",], 
 	fields : { 
 		section : {
 			select : [{ 
@@ -14,7 +15,7 @@ var gov = {
 					seq : "1"
 				}
 			],
-            needProcess: {split: true, token: '>'},
+                        needProcess: {split: true, token: '>'},
 			option : false,
 		},
 		
@@ -36,19 +37,17 @@ var gov = {
 			],
 			option : true,
 		},
-        link : { 
+                link : { 
 			option : true, 
 		},
-        date : { 
+                date : { 
 			option : true,
-            select : [{ 
-                    xpath : '//*[@id="container"]/div[6]/h2/span[2]',
-                    condition : "and",
-                    seq : "1"
-                }
-            ],            
+                        select : [{ 
+                                        xpath : '//*[@id="container"]/div[6]/h2/span[2]',
+                                        condition : "and",
+                                        seq : "1"
+                        } ],            
 		},
-		nextPageXpath:["#container > div.lbox.container > table > tbody > tr > td > div > ul > li:nth-child(6) > a",],
 	},
 };
 
