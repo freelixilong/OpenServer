@@ -1,0 +1,45 @@
+<!-- related js: js/view/DeviceInstall.js -->
+<div class="widget-content">
+    <form class="form-horizontal" role="form">
+        <legend>What to Install</legend>
+        <h4>This wizard will assist in installing settings to one or more security devices.</h4>
+        <div class="radio">
+            <label>
+                <input type="radio" name="modeRadios" value="packageDevice" action="change-mode" checked>Install Policy Package & Device Settings
+            </label>
+        </div>
+        <div class="mode-desc">
+            Install a selected policy package. Any device specific settings for devices associated with the package will also be installed.
+        </div>
+        <div class="subform" id="policy-device-subform">
+            <div class="subform-desc">Please enter the following information:</div>
+            <div class="subform-content">
+                <div editor="policyPackage"></div>
+                <div editor="policydevice"></div>
+                <div editor="policyComment"></div>
+            </div>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="modeRadios" value="deviceOnly" action="change-mode">Install Device Settings (only)
+            </label>
+        </div>
+        <div class="mode-desc">
+            Install only device settings for a select set of devices. Policy and Object changes will not be updated from the last install.
+        </div>
+        <div class="subform" id="device-only-subform" style="display: none;">
+            <div class="subform-desc">Please enter the following information:</div>
+            <div class="subform-content">
+                <div editor="onlydevice"></div>
+                <div editor="onlyComment"></div>
+            </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="button-footer">
+                <button type="button" class="btn btn-primary" action="ok">OK</button>
+                <button type="button" class="btn btn-default" action="cancel">Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>

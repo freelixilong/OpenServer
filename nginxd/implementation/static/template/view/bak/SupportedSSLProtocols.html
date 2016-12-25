@@ -1,0 +1,55 @@
+<div class="form-group">
+    <label class="control-label col-md-4" for="">Supported SSL Protocols</label>
+    <div class="col-md-8" data-toggle="tooltip" title="">
+        <div region="protocols-grid">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Protocol</th>
+                        <th>Enable</th>
+                        <th>Disable</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">SSL 3.0</th>
+                        <td>
+                            <input type="radio" name="ssl_3_0" value="true" checked>
+                        </td>
+                        <td>
+                            <input type="radio" name="ssl_3_0" value="false" action="onEditorChange30">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">TLS 1.0</th>
+                        <td>
+                            <input type="radio" name="tls_1_0" value="true" checked action="onEditorChange10Checked">
+                        </td>
+                        <td>
+                            <input type="radio" name="tls_1_0" value="false" action="onEditorChange10Unchecked">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">TLS 1.1</th>
+                        <td>
+                            <input type="radio" name="tls_1_1" value="true" checked>
+                        </td>
+                        <td>
+                            <input type="radio" name="tls_1_1" value="false" action="onEditorChange11">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">TLS 1.2</th>
+                        <td>
+                            <input type="radio" name="tls_1_2" value="true" checked>
+                        </td>
+                        <td>
+                            <input type="radio" name="tls_1_2" value="false" action="onEditorChange12">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <span class="help-block editor-status-text input-error" ui="msg"></span>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+<!-- related js: js/view/SnmpCommunity.js -->
+<div class="panel-heading">New SNMP Community</div>
+<div class="panel-body">
+    <form class="form-horizontal">
+        <div editor="communityName"></div>
+        <div class="hosts">
+            <div class="hosts-header"><strong>Hosts:</strong></div>
+            <div region="hosts-grid"></div>
+            <button type="button" class="btn btn-primary" action="add">Add</button>
+        </div>
+        <div class="queries">
+            <div class="queries-header"><strong>Queries:</strong></div>
+            <div region="queries-grid"></div>
+        </div>
+        <div class="traps">
+            <div class="traps-header"><strong>Traps:</strong></div>
+            <div region="traps-grid"></div>
+        </div>
+        <div class="snmp">
+            <div region="snmp-grid"></div>
+        </div>
+    </form>
+</div>
+<div class="button-footer">
+    <button type="button" class="btn btn-primary" action="ok">OK</button>
+    <button type="button" class="btn btn-default" action="cancel">Cancel</button>
+</div>

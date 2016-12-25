@@ -1,0 +1,19 @@
+<!-- related js: js/view/SystemInformation.js -->
+<div class="panel-heading"><strong>System Information</strong></div>
+<div class="panel-body">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label class="control-label col-md-3" for="basic-editor-42">Administrative Domain</label>
+            <div class="col-md-9" data-toggle="tooltip" title="">
+                <div class="ro">
+                    <div ui="input-ro" data-value="Enable" class="form-control-static">
+                        {{#is administrativeDomain "disable"}}
+                        	Disabled <a href="javascript:void(0);" action="click" value="enable">[Enable]</a>
+                        {{else}}
+                        	Enabled <a href="javascript:void(0);" action="click" value="disable">[Disable]</a>
+                        {{/is}}
+                    </div>
+                </div><span class="help-block editor-status-text input-error" ui="msg"></span></div>
+        </div>
+    </form>
+</div>

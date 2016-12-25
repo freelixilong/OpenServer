@@ -1,0 +1,20 @@
+<a class="" 
+{{#if module}}href="#navigate/{{module}}"{{/if}}
+{{#if group}} group="{{group}}"{{/if}}
+{{#if can_delete}} can_delete="{{can_delete}}"{{/if}}
+{{#if can_edit}} can_edit="{{can_edit}}"{{/if}}
+{{#if can_upgrade}} can_upgrade="{{can_upgrade}}"{{/if}}
+{{#if ul_type}} ul_type="{{ul_type}}"{{/if}}
+{{#if mode}} mode="{{mode}}"{{/if}}
+{{#if can_assign}} can_assign="{{can_assign}}"{{/if}}
+{{#if can_install}} can_install="{{can_install}}"{{/if}}
+{{#if can_reinstall}} can_reinstall="{{can_reinstall}}"{{/if}}
+{{#if can_rename}} can_rename="{{can_rename}}"{{/if}}
+{{#if can_rename_folder}} can_rename_folder="{{can_rename_folder}}"{{/if}}
+{{#if can_delete_folder}} can_delete_folder="{{can_delete_folder}}"{{/if}}
+{{#if can_rename}} can_rename="{{can_rename}}"{{/if}}
+{{#if can_export}} can_export="{{can_export}}"{{/if}}
+{{#if val}} value="{{val}}"{{/if}}>
+   <img class="node"><i class="{{icon}}"></i> {{val}}{{#if childNumber}}({{childNumber}}){{/if}}
+</a>
+<ul class="children hidden"></ul>

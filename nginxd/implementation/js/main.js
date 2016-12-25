@@ -13,7 +13,7 @@
 		fullScreen: true,
 		template: '@main.html',
 		navRegion: 'contextBody',
-		defaultContext: 'object',
+		defaultContext: 'objects',
 		baseAjaxURI: 'data',
 		//Note: Always set navRegion if using app template here, unless you've merged it(the tpl) with index.html;
 	});
@@ -28,10 +28,7 @@
 	///////////more initializers/////////// - [optional]
 	app.addInitializer(function() {
 		app.onResized = function() {
-			app.mainView.contextBody.resize({
-				width: '100%',
-				height: '100%'
-			});
+			app.mainView.contextBody.currentView.trigger("view:resized");		
 		};
 	});
 

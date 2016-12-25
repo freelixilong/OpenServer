@@ -1,0 +1,85 @@
+<!-- related js: js/view/CreateNewPolicy.js -->
+<div class="widget-content">
+    <form class="form-horizontal" role="form">
+        <div class="form-header">
+            Create New Policy
+        </div>
+        <div class="form-content">
+            <div class="form-body">
+                <div class="fieldset-header"><strong>Network Configuration</strong></div>
+                <div class="seperate-line"></div>
+                <!-- Network Configuration -->
+                <div editor="policyName"></div>
+                <div editor="operationMode"></div>
+                <div editor="deploymentMode"></div>
+                <div editor="virtualServer"></div>
+                <div region="httpContentRouting"></div>
+                <!-- line -->
+                <div class="seperate-line"></div>
+                <div editor="matchOnce"></div>
+                <div editor="serverPool"></div>
+                <div editor="protectedHostnames"></div>
+                <div editor="clientRealIP"></div>
+                <div class="seperate-trad"></div>
+                <div class="seperate-line"></div>
+                <div editor="synCookie"></div>
+                <div editor="halfOpenThreshold"></div>
+                <div class="seperate-trad"></div>
+                <div class="seperate-line"></div>
+                <div editor="httpService"></div>
+                <!-- line -->
+                <div class="seperate-trad"></div>
+                <div class="seperate-line"></div>
+                <div editor="httpsService"></div>
+                <div id="httpsSettings">
+                    <div editor="certificate"></div>
+                    <div editor="certificateIntermediateGroup"></div>
+                    <!-- ssl setting control -->
+                    <div class="ssl-setting-link" action="show" id="show-settings">
+                        <a href="javascript:void(0);">Show advanced SSL settings</a>
+                    </div>
+                    <div class="ssl-setting-link" action="hide" id="hide-settings">
+                        <a href="javascript:void(0);">Hide advanced SSL settings</a>
+                    </div>
+                    <!-- advanced ssl settings -->
+                    <div editor="addHSTSHeader"></div>
+                    <div editor="maxAge"></div> 
+                    <div editor="certificateVerification"></div>
+                    <div editor="enableURLBasedClientCertificate"></div>
+                    <div editor="urlBasedClientCertificateGroup"></div> 
+                    <div editor="maxHTTPRequestLength"></div>
+                    <div editor="clientCertificateForwarding"></div>
+                    <div editor="enableServerNameIndicationSNI"></div>
+                    <div editor="snistrict"></div> 
+                    <div editor="snicert"></div> 
+                    <div editor="supportedSSLProtocols"></div>
+                    <div editor="sslTlsEncryptionLevel"></div>
+                    <div editor="ssltlsEncryptionLevelCustomize"></div>
+                    <div editor="enablePerfectForwardSecrecy"></div>
+                    <div editor="prioritizeRC4CipherSuite"></div>
+                    <div editor="disableClientInitiatedSSLRenegotiation"></div>
+                    <!-- line -->
+                </div>
+                <div class="seperate-trad"></div>
+                <div class="seperate-line"></div>
+                <div editor="hRedirectoHttps"></div>
+                <div class="seperate-trad"></div>
+                <div class="seperate-line"></div>
+                <div class="fieldset-header"><strong>Security Configuration</strong></div>
+                <div class="seperate-line"></div>
+                <!-- Security Configuration -->
+                <div editor="inlineProtectionProfile"></div>
+                <div editor="autoLearnProfile"></div>
+                <div editor="monitorMode"></div>
+                <div editor="urlCaseSensitivity"></div>
+                <div editor="comments"></div>
+            </div>
+            <div class="form-group">
+                <div class="button-footer">
+                    <button type="button" class="btn btn-primary" action="apply">Apply</button>
+                    <button type="button" class="btn btn-default" action="cancel">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,31 @@
+<!-- related js: js/view/AddDevice.js -->
+<div class="widget-content">
+    <form class="form-horizontal" role="form">
+        <legend>Login</legend>
+        <h4>Please choose one of the following methods for adding a device or VDOM.</h4>
+        <div class="radio">
+            <label>
+                <input type="radio" name="modeRadios" value="discover" action="change-mode" checked>Discover
+            </label>
+        </div>
+        <div class="mode-desc">
+            Device will be probed using a provided IP address and credentials to determine model type and other important information.
+        </div>
+        <div class="subform" id="discover-subform">
+            <div class="subform-desc">Please enter the following information:</div>
+            <div editor="name"></div>
+            <div editor="ipAddress"></div>
+            <div editor="username"></div>
+            <div editor="password"></div>
+            <div editor="addToGroups"></div>
+            <div editor="groups"></div>
+            <div editor="description"></div>
+        </div>
+        <div class="form-group">
+            <div class="button-footer">
+                <button type="button" class="btn btn-primary" action="ok">OK</button>
+                <button type="button" class="btn btn-default" action="cancel">Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>

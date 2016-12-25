@@ -1,0 +1,30 @@
+<!-- related js: js/view/AdminSettingsTemplate.js -->
+<div class="panel-heading">Admin Settings</div>
+<div class="panel-body">
+    <form class="form-horizontal">
+        <div class="h4"><strong>Web Administration Ports</strong></div>
+        <div editor="http"></div>
+        <div editor="https"></div>
+        <div editor="configSync"></div>
+        <div class="seperate-line"></div>
+        <div class="h4"><strong>Timeout Settings</strong></div>
+        <div editor="idleTimeout"></div>
+        <div class="seperate-line"></div>
+        <div class="h4"><strong>Language</strong></div>
+        <div editor="webAdministration"></div>
+        <div class="seperate-line"></div>
+        <div class="h4"><strong>Security Settings</strong></div>
+        <div editor="disableSSLv3forWebAdministration"></div>
+        <div editor="enableSingleAdminUserlogin"></div>
+        <div editor="enableStrongPasswords"></div>
+        <div class="col-md-offset-1">Strong password rule:</div>
+        <div class="col-md-offset-1">1. Between 8-16 characters</div>
+        <div class="col-md-offset-1">2. Minimum of one upper case and one lower case</div>
+        <div class="col-md-offset-1">3. Minimum of one numeric</div>
+        <div class="col-md-offset-1">4. Minimum of one non alphanumeric character</div>
+        <div class="seperate-line"></div>
+    </form>
+</div>
+<div class="button-footer">
+    <button type="button" class="btn btn-primary" action="apply">Apply</button>
+</div>

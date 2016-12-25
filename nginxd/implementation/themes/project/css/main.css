@@ -8,10 +8,7 @@
  * 2. run `node tools/themeprep/run.js <your new theme name>`
  * 3. start tweaking the new theme
  * 4. re-run step.2 whenever you want to update /fonts or have added new icons into /img folders
- *
- * @author Tim.Liu
- * @created 2014.03.09
- * @updated 2014.07.22
+
  */
 /*!
  * jQuery UI CSS Framework 1.10.4
@@ -13698,7 +13695,7 @@ textarea {
 }
 .appnavbar .page-header .title {
   padding: 0 0 0 70px;
-  background: url(../img/icon/ico_fortinet.png) 30px 8px no-repeat;
+  //background: url(../img/icon/ico_fortinet.png) 30px 8px no-repeat;
   color: #FFFFFF;
   font-size: 25px;
   font-weight: 700;

@@ -1,0 +1,45 @@
+<!-- related js: js/view/Install.js -->
+<!--<link rel="stylesheet" href="themes/project/css/font-awesome.min.css">-->
+<div class="widget-content">
+    <form class="form-horizontal" role="form">
+        <legend>What to install</legend>
+        <h4>This wizard will assist in installing settings to one or more security devices. </h4>
+        <div class="radio">
+            <label>
+                <input type="radio" name="modeRadios" value="policyPackageDeviceSettings" checked>Install Policy Package & Device Settings
+            </label>
+        </div>
+        <div class="mode-desc">
+            Install a selected policy package. Any device specific settings for devices associated with the package will also be installed.
+        </div>
+        <div class="subform" id="">
+            <div style="float:left">
+            <div class="subform-desc">Please enter the following information:</div>
+            <div class="subform-content">
+                <div editor="policyPackage"></div>
+                <div editor="device"></div>
+                <div editor="comment"></div>
+            </div>
+            </div>
+            <div name="spin" style="width: 50px; float:right;margin: 70px 100px 0 0">
+                <ul class="fa-ul">
+                    <li><i class="fa-li fa fa-spinner fa-pulse"></i></li></li>
+                </ul>
+            </div>
+            <div style="clear:both">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="button-footer">
+                <button type="button" class="btn btn-primary" id='ok_btn' action="ok">OK</button>
+                <button type="button" class="btn btn-default" action="cancel">Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="error-message">
+	<div class="" region="errorMessage" style="overflow-y:auto">
+		<legend>Error Message</legend>
+	</div>
+	<div class="" region="errorData" style="overflow-y:auto">
+</div>

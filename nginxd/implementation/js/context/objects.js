@@ -3,81 +3,81 @@
 	app.context('objects', {
 		
 		className: 'wrapper-full container-fluid',
-		template: '<div region="mockups"></div>',
-
-		data: {
-			mockups: [
-
-				//breadcrumb
-				{tpl: 'breadcrumb.html'},
-
-				//navbars
-				{tpl: 'nav-bar.html', className: 'navbar-default'},
-				{tpl: 'nav-bar.html', className: 'navbar-inverse'},
-
-				//boxes
-				{tpl: 'boxes.html', onReady: function(){
-					if(Modernizr.chrome){
-						this.$el.find('[warning="chrome"]').removeClass('hidden');
-					}
-				}},
-
-				//containers
-				{tpl: 'containers.html'},			
-
-				//buttons
-				{tpl: 'buttons.html',},
-
-				//typography
-				{tpl: 'typography.html'},
-
-				//indicators (alert, lable, badge and progress bar)
-				{tpl: 'indicators.html'},
-
-				//navigators
-				{tpl: 'navs.html'},
-
-				//popups & dialogs
-				{tpl: 'dialogs.html', onReady: function(){
-					this.$el.find('[data-toggle="popover"]').popover();
-					this.$el.find('[data-toggle="tooltip"]').tooltip();
-				}},
-
-				//table
-				{tpl: 'table.html'},
-
-				//forms
-				{tpl: 'forms.html'},
-
-				//copyright of the mockup collections above
-				{tpl: 'copyright.html'}
-
-		]},
+		template: '@context/ContextSettings.html',
 
 		onReady: function(){
-			_.each(this.get('mockups'), function(m){
-				/////////////////////////////////////////////////////////////////////////
-				///Manually managed view life cycle..without this.show('region',...)..///
-				/////////////////////////////////////////////////////////////////////////
-				//1. create it
-				var view = app.view({
-					className: 'wrapper-full',
-					template: '@mockups/' + m.tpl,
-					onRender: function(){
-						this.$el.find('> div').addClass(m.className);
-					},
-					onReady: function(){
-						if(m.onReady) m.onReady.call(this);
-					}
-				}, true);
-				//2. render and insert it into DOM
-				this.getRegion('mockups').$el.append(view.render().el);
-				//3. connect the view life-cycle event seq: --render--[[show]]--ready 
-				view.triggerMethod('show'); 
-				//(ref: /lib+-/marionette/view.js, we refined the seq and added a ready e.)
+		},
+		guard: function() { // -- [optional]
+            //return error to cancel navigation;
+            //return '', false, undefined to proceed;
+            return;
+        },
 
-			}, this);
-		}
+        //listeners: (after guard) // -- [optional]
+        onBeforeNavigateTo: function() {
+            //return true to proceed;
+            //return false, '', undefined to cancel navigation
+            return true;
+        },
+        onNavigateTo: function(path) { // -- [optional]
+            //path == '', undefined means the navigation stopped here.
+            if (path) {
+                this.pathArray = path.split('/');
+            }
+            this.navigateToMenu();
+        },
+        navigateToMenu: function() {
+            if (this.pathArray && this.pathArray[0]) {
+            	var content = this.getRegion('content');
+                content.trigger('region:load-view', this.pathArray[0]);
+            }
+        },
+        onNavigateAway: function() { // -- [optional]
+            //... 
+            //if you want to save context status (through localStorage maybe)
+        },
+        onShow: function() {
+            //app.trigger('app:delete-cookie', 'device');
+            //icon: 'ygtvlabel l2_menu_network ygtvcontent',
+            this.getRegion('menu').trigger('region:load-view', 'MenuTree', {
+                data: [{
+                    val: 'System',
+                    children: [{
+                        val: 'Settings',
+                        icon: 'ygtvlabel l2_menu_maintenance ygtvcontent',
+                        module: 'objects/Mockups'
+                    }, {
+                        val: 'User',
+	                    children: [{
+	                        val: 'User Group',
+	                        icon: 'ygtvlabel l2_menu_waf_user_group ygtvcontent',
+	                        module: 'objects/CMAdminGroup'
+	                    }, {
+	                        val: 'Users',
+	                        icon: 'ygtvlabel l2_menu_waf_local_user ygtvcontent',
+	                        module: 'objects/CMLDAPServer',
+	                    },{
+                        val: 'Admin',
+                        icon: 'ygtvlabel l2_menu_admin ygtvcontent',
+                        val: 'Administrators',
+                        module: 'objects/Users'
+                        },]
+	                }, {
+                        val: 'Site Settings',
+                        icon: 'ygtvlabel l2_menu_network ygtvcontent',
+                        module: 'objects/SiteSetting'
+                    },]
+                },]
+            });
+
+            //this.getRegion('content').trigger('region:load-view', 'ManagerStatus');
+            this.trigger('view:resized');
+        },
+        onResized: function() {
+            var height = $window.height();
+            this.menu.$el.height(height);
+            this.content.$el.height(height);
+        },
 
 	});
 

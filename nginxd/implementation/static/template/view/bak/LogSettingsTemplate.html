@@ -1,0 +1,44 @@
+<!-- related js: js/view/LogSettingsTemplate.js -->
+<div class="panel panel-default">
+    <div class="panel-heading">Log Settings</div>
+    <div class="panel-body">
+        <form class="form-horizontal">            
+            <div action="toggle-other-log-settings">
+                <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+                <strong> Other Log Settings</strong>
+            </div>
+            <div class="other-log-settings">
+                <div editor="attacklog"></div>
+                <div editor="trafficlog"></div>
+                <div editor="trafficpktlog"></div>
+                <div editor="eventlog"></div>
+                <div editor="ignoreSslErrors"></div>
+                <div class="seperate-line"></div>
+                <!-- Retain Packet Payload For -->
+                <div class="form-part-header"><strong>Retain Packet Payload For</strong></div>
+                <div editor="pararuleviolation"></div>
+                <div editor="hidfieldsviolation"></div>
+                <div editor="httpprotocol"></div>
+                <div editor="signaturedetection"></div>
+                <div editor="customsignaturedetection"></div>
+                <div editor="antivirusdetection"></div>
+                <div editor="customaccessviolation"></div>
+                <div editor="illegalxmlformat"></div>
+                <div editor="ipreputationviolation"></div>
+                <div editor="illegalfiletype"></div>
+                <div editor="cookiepoison"></div>
+                <div editor="paddingoracle"></div>
+                <div editor="fortiSandboxDetection"></div>
+                <div class="seperate-line"></div>
+                <!-- System Alert Thresholds -->
+                <div class="form-part-header"><strong>System Alert Thresholds</strong></div>
+                <div editor="cpu"></div>
+                <div editor="memory"></div>
+                <div editor="triggerpolicy"></div>
+            </div>
+        </form>
+    </div>
+    <div class="button-footer">
+        <button type="button" class="btn btn-primary" action="apply">Apply</button>
+    </div>
+</div>
