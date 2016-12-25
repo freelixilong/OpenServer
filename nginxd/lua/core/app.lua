@@ -45,8 +45,9 @@ function App:checkAccess(module, method)
 end
 
 function App:route()
+    ngx.log(ngx.DEBUG, "App:route uri = ", ngx.var.uri)
     local module, method = unpack(request:getAction())
-
+    ngx.log(ngx.DEBUG, "App:route module = ", module )
     if not module or not method then
         exception:raise("core.badAction", { module = module, method = method })
     end

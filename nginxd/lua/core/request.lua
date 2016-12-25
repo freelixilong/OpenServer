@@ -19,16 +19,16 @@ local function parseUri(uri, data)
     --http://localhost/api/v1.0
     --http://localhost/data/departId/sectionId(composed)/titleId
 
-    if root == "data" and module and method then
+    if root == "data" and departId and method then
         data.action = {"Object", method}
         data.params["departId"]    = departId
         data.params["sectionId"] = sectionId
         data.params["titleId"]     = titleId
-    elseif root == "auth" and module then
-        if module == "login" or module == "logout" then
+    elseif root == "auth" and departId then
+        if departId == "login" or departId == "logout" then
             data.action = {"User", method}
         end
-    elseif root == "api" and module then
+    elseif root == "api" then
         data.action = {"RestAPI", method}
     end
 end

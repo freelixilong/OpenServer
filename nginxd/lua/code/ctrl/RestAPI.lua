@@ -6,7 +6,7 @@ local ctrlBase = loadMod("core.base.ctrl")
 local restAPIMap = loadMod("config.restAPIMap")
 local sysConf = loadMod("config.system")
 local ObjectService = util:getService("object")
-local UserService = util:getService("user")
+--local UserService = util:getService("user")
 
 require "bit"
 
@@ -81,7 +81,7 @@ end
 
 function RestAPI:post()
     ngx.log(ngx.DEBUG, "RestAPI post: ", ngx.var.uri)
-    local user = self:authorizationCheck()
+    --local user = self:authorizationCheck()
     local res, status
     local isFile
     local args = request:getArgsTbl()
@@ -89,7 +89,7 @@ function RestAPI:post()
     if contentType then 
         isFile = string.find(request:getHeader("Content-Type"), "multipart")
     end
-    local payload = Request:getPayload()
+    local payload = request:getPayload()
   
     ngx.log(ngx.DEBUG, "RestAPI post: ", payload)
     local jsonObj = util:jsonDecode(payload)

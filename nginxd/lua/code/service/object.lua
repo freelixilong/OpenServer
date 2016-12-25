@@ -1,9 +1,9 @@
 local util = loadMod("core.util")
 local exception = loadMod("core.exception")
 local serviceBase = loadMod("core.base.service")
-local sysConf = loadMod("config.system")
-local decorator = loadMod("code.service.decorator")
-local log =  util:getService("log")
+---local sysConf = loadMod("config.system")
+--local decorator = loadMod("code.service.decorator")
+--local log =  util:getService("log")
 local response = loadMod("core.response")
 
 local Object = {
@@ -22,7 +22,6 @@ function Object:getUniqueID(module)
     end
     return uniqueID
 end
-
 
 local function mixPwd(passwd)
     return util.string:sha1(passwd .. sysConf.PASSWD_MIX_KEY)
@@ -121,11 +120,11 @@ function Object:get(module, args, _id, subModule, vdom, loginUser)
     return table.getn(res) == 0 and '[]' or res
 
 end
-
-function Object:post(module, args, jsonStr, _id, subModule, isFile)
-    if not isFile and _id ~= "" and subModule == "" then
+--(jsonObj.mkey, jsonObj.subKey, args, jsonObj.data, isFile)
+function Object:post(dep, sec, args, data, isFile)
+    if not isFile and(dep == "" or data == nil )  then
         exception:raise("core.badCall", {
-            errMsg = "there should be subModule in your restfull API.",
+            errMsg = "there should be specific dep in your restfull API.",
         })
     end
 
@@ -138,23 +137,8 @@ function Object:post(module, args, jsonStr, _id, subModule, isFile)
 			return ret
 		end
     end
-
-	local doc = formData and formData or util:jsonDecode(jsonStr)
-
-	local ret, errMsg = util:checkItemName(doc)
-	if not ret then
-		response:reply({msg = errMsg}, nil, 500)
-    end
-
-    local isSub = ""
-    if _id == "" then
-        doc._id = doc.name and doc.name or "single"  --default process move here
-    else
-        -- sub
-        doc.parentID = _id
-        isSub = "Sub"
-    end
-    return self.dbmodule:add(module..isSub, doc)
+	--local ret, errMsg = util:checkItemName(data)
+    return self.dbmodule:add(dep, sec, data)
 end
 
 

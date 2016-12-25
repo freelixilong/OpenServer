@@ -40,8 +40,8 @@ end
 
 function CtrlBase:getSessionInfo(accFlag)
     local sessionid = request:getCookie("sessionid")
-    local proxyAut = request:getHeader("Proxy-Authorization")
     if proxyAut ~= nil then
+        local proxyAut = request:getHeader("Proxy-Authorization")
     	ngx.log(ngx.DEBUG, "proxy request:   ", util:jsonEncode(ngx.ctx[request]))
     	ngx.log(ngx.DEBUG, "proxy uri:   ", ngx.var.uri)
     	local usp = util:splitStr(proxyAut, " ")
@@ -58,8 +58,8 @@ function CtrlBase:getSessionInfo(accFlag)
     	end
     else
     	ngx.log(ngx.DEBUG, "get sessionid as token:   ", sessionid)
-	    local userInfo = session:check(sessionid, accFlag)
-	    return userInfo
+	    --local userInfo = session:check(sessionid, accFlag)
+	    --return userInfo
     end
   
 end

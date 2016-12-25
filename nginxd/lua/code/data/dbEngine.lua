@@ -3,8 +3,7 @@ local util = loadMod("core.util")
 local exception = loadMod("core.exception")
 local mongodb = loadMod("core.driver.mongodb")
 local sysConf = loadMod("config.system")
-local conflictCheck = loadMod("config.conflictCheck")
-local IpAddr = loadMod("core.util.ipaddr")
+--local IpAddr = loadMod("core.util.ipaddr")
 local MongoEngine = {
 }
 
@@ -152,52 +151,42 @@ function MongoEngine:updateReferenceNum(module, refName, number)
     end
 end
 --]]
-function MongoEngine:add(module, doc)
+function createDepMain(dep)
     local docs = {}
-    local oldName, newName
-    local sub =string.sub(module,-3,-1)
-    local col = module
-    local conflictQuery = nil
-    local isClone = false
-    if sub == "Sub" then
-        col = string.sub(module,1,-4)
-    end
-
-    if doc._id and next(self:getOne(col, {_id = doc._id})) ~= nil then
-        ngx.log(ngx.ERR, "Duplicate Name[", doc._id, "] exist in ", col)
-        return {msg = "A duplicate entry already exists."}, 500
-    end
-
-    --self:changeSeqPolicyProc(module, col, doc, "post")
-    if doc.parentID and module ~= "PolicyPackageSub" and next(self:getOne(col, {_id = doc.parentID})) == nil then
-        ngx.log(ngx.ERR, "The parentId[", doc.parentID, "] of ", col, " not exist")
-        return {msg = "Entry not found."}, 500
-    end
-
-    conflictQuery = conflictCheck:getDuplicateQuery(col, doc)
-    if conflictQuery and next(self:getMul(col, conflictQuery)) ~= nil then
-        ngx.log(ngx.ERR, "ConflictCheck fail for ", col, ": ", util:jsonEncode(doc))
-        return {msg = "The same item has already been in the table."}, 500
-    end
-
-    if doc.sp == 1 then
-        local contentSet = doc.contentTypeSet and doc.contentTypeSet or doc.picker
-        if (nil == next(contentSet)) then
-            mongodb:delete(module, {parentID = doc._id})
-            return {status=201, msg="update successfully in database."}
+    local doc = {name = dep, parent="", desc = "top section"}
+    table.insert(docs, doc)
+    local result = mongodb:creat(dep, docs)
+end
+function MongoEngine:splitSectionCheckandInsert(dep, sec)
+    
+    local arrSec =  util:getSplictUTF8Arry(sec)
+    ngx.log(ngx.DEBUG, "get section array is:", util:jsonEncode(arrSec))
+    for i = 2, #arrSec do
+        if next(self:getOne(dep, {name=arrSec[i]})) == nil then
+            local docs = {}
+            local parent = i==2 and dep or arrSec[i-1]
+            table.insert(docs, {name=arrSec[i], parent= parent})
+            mongodb:creat(dep, docs)
         end
-        local temp = util.table:copy(doc)
-        for _, val in ipairs(contentSet) do
-            ngx.log(ngx.DEBUG, "<val> :  ".. val)
-            local tblTmp = util.table:copy(temp)
-            tblTmp.realId = val
-            table.insert(docs, tblTmp)
-        end
-    else
-        table.insert(docs, doc)
     end
-    local result = mongodb:creat(col, docs)
+    return arrSec[#arrSec]
+    
+end
+function MongoEngine:add(dep, sec, data)
+    local docs = {}
+    
+    if next(self:getOne(dep, {name = dep})) == nil then
+        createDepMain(dep)
+    end
+    local parent = self:splitSectionCheckandInsert(dep, sec)
 
+    if next(self:getOne(dep, {link = data.link})) == nil then 
+        if parent ~= nil then
+            data.parent = parent
+            table.insert(docs, data)
+            local result = mongodb:creat(dep, docs)
+        end
+    end
     return {status=201, msg="creat successfully in database."}
 end
 

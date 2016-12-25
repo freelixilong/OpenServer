@@ -1,7 +1,4 @@
---@ author: zhouxuehao
---@ date: 2015-4-7
---@ response wrap utility
---
+
 local json = require("cjson")
 local ObjectID = require "resty.mongol.object_id"
 local upload = require "resty.upload"
@@ -139,7 +136,7 @@ function Util:getService(name)
     if not ok then
         -- 直接获取数据访问业务逻辑模块
         ngx.log(ngx.ERR, "Not OK Path: ", path)
-        service = serviceBase:inherit({ DBACC_NAME = name }):init()
+        service = serviceBase:inherit({ DBACC_NAME = "dbEngine" }):init()
         saveMod(path, service)
     end
 
@@ -423,18 +420,94 @@ local function containsBadChars(str)
 	end
 	return false
 end
+function Util:getSplictUTF8Arry(str)
+    local len = #str 
+    local realLen = self:subStringGetTotalIndex(str)
+    local area = (string.byte(str, 1) >127) and 'utf-8' or 'ascii' -- utf-8
+    local tempStr, strArr = '', {}
+    local i, start = 1, 1
+    repeat
+        if string.byte(str,i) < 127 then
+            
+            if area == 'utf-8' then
+                tempStr = string.sub(str, start, i - 1)
+                if tempStr ~= " " then
+                    table.insert(strArr, tempStr)
+                end
+                tempStr = ''
+            end
+            i = i + 1
+            area = 'ascii'
+        else
+            local width = self:subStringGetByteCount(str, i)
+            if area == 'ascii' then
+                start = i
+            end
+            area = 'utf-8'
+            i = i + width
+        end
+    until(i > len);
 
-function Util:checkItemName(item)
-	if nil == item.name then
-		return true
-	elseif item.name == "" then
-		return false, 'Name is required.'
-	elseif containsBadChars(item.name) then
-		return false, 'The following characters are not allowed: < > ( ) # \" \''
-	else
-		return true
-	end
+    return strArr
+end
+--截取中英混合的UTF8字符串，endIndex可缺省
+function Util:subStringUTF8(str, startIndex, endIndex)
+    if startIndex < 0 then
+        startIndex = self:subStringGetTotalIndex(str) + startIndex + 1;
+    end
+
+    if endIndex ~= nil and endIndex < 0 then
+        endIndex = self:subStringGetTotalIndex(str) + endIndex + 1;
+    end
+
+    if endIndex == nil then 
+        return string.sub(str, self:subStringGetTrueIndex(str, startIndex));
+    else
+        return string.sub(str, self:subStringGetTrueIndex(str, startIndex), self:subStringGetTrueIndex(str, endIndex + 1) - 1);
+    end
 end
 
+--获取中英混合UTF8字符串的真实字符数量
+function Util:subStringGetTotalIndex(str)
+    local curIndex = 0;
+    local i = 1;
+    local lastCount = 1;
+    repeat 
+        lastCount = self:subStringGetByteCount(str, i)
+        i = i + lastCount;
+        curIndex = curIndex + 1;
+    until(lastCount == 0);
+    return curIndex - 1;
+end
+
+function Util:subStringGetTrueIndex(str, index)
+    local curIndex = 0;
+    local i = 1;
+    local lastCount = 1;
+    repeat 
+        lastCount = self:subStringGetByteCount(str, i)
+        i = i + lastCount;
+        curIndex = curIndex + 1;
+    until(curIndex >= index);
+    return i - lastCount;
+end
+
+--返回当前字符实际占用的字符数
+function Util:subStringGetByteCount(str, index)
+    local curByte = string.byte(str, index)
+    local byteCount = 1;
+    if curByte == nil then
+        byteCount = 0
+    elseif curByte > 0 and curByte <= 127 then
+        byteCount = 1
+    elseif curByte>=192 and curByte<223 then
+        byteCount = 2
+    elseif curByte>=224 and curByte<239 then
+        byteCount = 3
+    elseif curByte>=240 and curByte<=247 then
+        byteCount = 4
+    end
+    return byteCount;
+end
 
 return Util

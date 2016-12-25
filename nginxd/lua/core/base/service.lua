@@ -1,7 +1,4 @@
---@ author: zhouxuehao
---@ date: 2015-4-7
 --@ service module base
-
 local exception = loadMod("core.exception")
 
 local ServiceBase = {
