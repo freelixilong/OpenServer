@@ -15,15 +15,18 @@ end
 local function parseUri(uri, data)
     local root, menu, subMenu = nil, nil, nil
     local method = ngx.var.request_method:lower()
-    local root, departId, sectionId, titleId = uri:match("^/([%w_-]+)/([%w_-]+)/?([%w%s-_]*)/?([%w%s-_]*)")
+    local root, depart, departId, section, sectionId, title, titleId = uri:match("^/([%w_-]+)/([%w_-]+)/?([%w%d%s-_]*)/?([%w%s-_]*)/?([%w%d%s-_]*)/?([%w%s-_]*)/?([%w%d%s-_]*)")
     --http://localhost/api/v1.0
     --http://localhost/data/departId/sectionId(composed)/titleId
 
-    if root == "data" and departId and method then
+    if root == "data" and depart and method then
         data.action = {"Object", method}
+        data.params["depart"]    = depart
         data.params["departId"]    = departId
+        data.params["section"] = section
         data.params["sectionId"] = sectionId
-        data.params["titleId"]     = titleId
+        data.params["title"] = section
+        data.params["titleId"] = titleId
     elseif root == "auth" and departId then
         if departId == "login" or departId == "logout" then
             data.action = {"User", method}

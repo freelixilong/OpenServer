@@ -26,131 +26,7 @@ function MongoEngine:getOne(col, qry)
     ngx.log(ngx.DEBUG, "*************************  result : ", util:jsonEncode(result))
     return  result
 end
---[[
-function MongoEngine:getCollctIntersection (dstTabl, srcTabl, hasExtend)
-    local ele = nil
-    local intersect = {}
-    if hasExtend == false then
-        ngx.log(ngx.DEBUG, "------+++++getCollctIntersection  : init =0")
-        for _, ele in ipairs(srcTabl) do
-            intersect[ele] = true
-        end
-        return intersect
-    end
-                   
-    for _, ele in ipairs(srcTabl) do
-        ngx.log(ngx.DEBUG, "------+++++getCollctIntersection  : ", dstTabl[ele], " ele:", ele)
-        if dstTabl[ele] == true then
-            intersect[ele] = true
-        end   
-    end
-    return intersect
-end
 
-function MongoEngine:getMaxRealId(col, doc)
-    local currentRealId = 1
-
-    while (1) do
-        if next(mongodb:getOne(col, {["parentID"] = doc.parentID, ["realId"] = currentRealId})) == nil then
-            break;
-        end
-        currentRealId = currentRealId + 1
-    end
-    ngx.log(ngx.DEBUG, "getMaxRealId -----> ", currentRealId)
-    return currentRealId 
-end
-function MongoEngine:getMaxSeqId(col, doc)
-    local currentSeqId = 1
-
-    while (1) do
-        if next(mongodb:getOne(col, {["parentID"] = doc.parentID, ["seq"] = {["$gte"]=currentSeqId}})) == nil then
-            break;
-        end
-        currentSeqId = currentSeqId + 1
-    end
-    ngx.log(ngx.DEBUG, "getMaxSeqId -----> ", currentSeqId)
-    return currentSeqId 
-end
-function MongoEngine:changeAfterItemSeq(col, doc, seq)
-    local qry = {["parentID"] = doc.parentID, ["seq"] = {["$gte"]=seq}}
-    local res = mongodb:getMul(col, qry)
-    if res ~= nil then
-        local elem = nil
-        local currentSeq = seq
-        local findSeqStart = false
-        table.sort(res, function(pre, next)
-            return pre.seq < next.seq
-        end)
-        for _, elem in ipairs(res) do
-            ngx.log(ngx.DEBUG, "changeAfterItemSeq trarverse-----> ", elem.seq)
-            if elem.seq == currentSeq then
-                findSeqStart = true
-                --elem._id = util:objID2str(elem._id)
-                elem.seq = currentSeq + 1
-                ngx.log(ngx.DEBUG, "changeAfterItemSeq changed curSeqId-----> ", currentSeq)
-                elem._id = util:str2objID(elem._id)
-                local subQry =  {["_id"] = elem._id}
-                mongodb:update(col, subQry, elem)
-                currentSeq = currentSeq + 1
-            elseif(findSeqStart and elem.seq > currentSeq) then
-                ngx.log(ngx.DEBUG, "changeAfterItemSeq curSeqId-----> ", currentSeq)
-                ngx.log(ngx.DEBUG, "changeAfterItemSeq ele.seqId-----> ", elem.seq)
-                break
-            end
-        end
-    end
-end
-
-function MongoEngine:getCurrentSeqId(col, doc, realId)
-    local qry = {["parentID"] = doc.parentID, ["realId"] = realId}
-    local res = mongodb:getOne(col, qry)
-    if res ~= nil then
-        return res.seq
-    end
-end
-
-function MongoEngine:changeSeqPolicyProc(module, col, doc, method)
-    if sysConf.supportMoveTable[module] then
-        if doc["order"] == nil and doc._id == nil then-- create
-            ngx.log(ngx.DEBUG, "changeSeqPolicyProc realId:", module) 
-            doc.realId = self:getMaxRealId(col, doc)
-            doc.seq = self:getMaxSeqId(col, doc)
-            doc.order = nil
-        elseif doc["order"] == "before" and doc["child_mkey"] == nil then --insert
-            doc.realId = self:getMaxRealId(col, doc)
-            doc.seq = self:getCurrentSeqId(col, doc, doc["to"])
-            ngx.log(ngx.DEBUG, "changeSeqPolicyProc get current seq:", doc.seq) 
-            self:changeAfterItemSeq(col, doc, doc.seq)
-            doc.order = nil
-        elseif (doc["order"] == "before" or doc["order"] == "after") and doc["child_mkey"] ~= nil then --move
-            local qry = {["parentID"] = doc.parentID, ["realId"] = doc["child_mkey"]}
-            local item = self:getOne(col, qry)
-            local seq = 1
-            if doc["order"] == "before" then
-                seq = self:getCurrentSeqId(col, doc, doc["to"])
-            else
-                seq = doc["beforeSeqId"]
-            end
-            self:changeAfterItemSeq(col, doc, seq)
-            item.seq = seq
-            item._id = util:str2objID(item._id)
-            return item
-        end 
-    end
-    return doc
-end
-
-
-function MongoEngine:updateReferenceNum(module, refName, number)
-    if type(refName) == "table" then
-        for _, refItem in ipairs(refName) do
-            mongodb:update(module, {_id = refItem}, {["$inc"] = {ref = number}})
-        end
-    else
-        mongodb:update(module, {_id = refName}, {["$inc"] = {ref = number}})
-    end
-end
---]]
 function createDepMain(dep)
     local docs = {}
     local doc = {name = dep, parent="", desc = "top section"}
@@ -190,22 +66,12 @@ function MongoEngine:add(dep, sec, data)
     return {status=201, msg="creat successfully in database."}
 end
 
-function MongoEngine:delete(module, qry)
-    ngx.log(ngx.DEBUG, "Device delete: ++++>  " , type(qry))
+function MongoEngine:delete(col, qry)
+    ngx.log(ngx.DEBUG, "MongoEngine delete: ++++>  " , type(qry))
    
-    local sub =string.sub(module,-3,-1)
-    local col = module
-    local subcol = module
+    --local rescol = mongodb:getMul(col, qry)
 
-    if sub ~= "Sub" then  --delete sub
-        subcol = subcol.."Sub"
-    else
-        --subcol =''
-        col = string.sub(module,1,-4)
-    end
-    local rescol = mongodb:getMul(col, qry)
-
-	if rescol then
+	--[[if rescol then
 		for _, rec in ipairs(rescol) do
 			local ret, err = self:fileRemove(module, rec)
 			if not ret then
@@ -213,57 +79,20 @@ function MongoEngine:delete(module, qry)
 				return  { affected = 0, err}
 			end
 		end
-	end
+	end--]]
 
     local result = mongodb:delete(col, qry)
     
     return {affected = 1}
 end
 
-function MongoEngine:updateSubTblRefNum(m, f, resSub, docTbl)
-    if not isNullVal(resSub[f]) and isNullVal(docTbl[f]) then
-        self:updateReferenceNum(m, resSub[f], -1)
-    elseif not isNullVal(resSub[f]) and not isNullVal(docTbl[f]) then
-        if resSub[f] ~= docTbl[f] then
-            self:updateReferenceNum(m, resSub[f], -1)
-            self:updateReferenceNum(m, docTbl[f], 1)
-        end
-    elseif isNullVal(resSub[f]) and not isNullVal(docTbl[f]) then
-        self:updateReferenceNum(m, docTbl[f], 1)                  
-    elseif isNullVal(resSub[f]) and isNullVal(docTbl[f])  then
-
-    end
-end
-function MongoEngine:update(module, qry, doc)
-    local sub =string.sub(module,-3,-1)
-    local col = module
-    if sub == "Sub" then
-        col = string.sub(module,1,-4)
-    end
-
+function MongoEngine:update(col, qry, doc)
+   
     local res = mongodb:getOne(col, qry)
 
-    if next(res) == nil or 
-        (doc.parentID and module ~= "PolicyPackageSub" and next(self:getOne(col, {_id = doc.parentID})) == nil) then
+    if next(res) == nil  then
         return {msg = "Entry not found."}, 500
     end
-    --doc = self:changeSeqPolicyProc(module, col, doc, "put")
-    
-    conflictQuery = conflictCheck:getDuplicateQuery(col, doc)
-    if conflictQuery then
-        local confictObject = nil
-        local conflictArray = self:getMul(col, conflictQuery)
-        if next(conflictArray) ~= nil then
-            for _, confictObject in pairs(conflictArray) do
-                if confictObject._id ~= res._id then
-                    ngx.log(ngx.ERR, "ConflictCheck fail for ", col, ": ", util:jsonEncode(doc))
-                    return {msg = "The same item has already been in the table."}, 500
-                end
-            end
-        end    
-    end
-    doc.ref = res.ref
-    doc.can_delete = res.can_delete
     local result = mongodb:update(col, qry, doc)
     -- now the doc has been updated in mongodb successfully
     return {status=201, msg="update  successfully in database."}

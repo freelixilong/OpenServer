@@ -50,14 +50,6 @@ function Object:getSubTable(module, nameKey)
     return result
 end
 
-function Object:getSpecialSubModule(module, subModule, _id)
-    local qry = {["$and"]={
-            {["subModule"] = subModule},
-            {["parentID"] = _id}
-        }}
-    util:zeroBasedArray(qry)
-    return self.dbmodule:getMul(module, qry)
-end
 
 function removeItemByName(items, name)
     local index = nil
@@ -93,35 +85,118 @@ function Object:decorateResult(module, resultTable, _id)
         end
     end
 end
-
-function Object:get(module, args, _id, subModule, vdom, loginUser)
-    local key, val, res
-    if _id ~= "" and subModule == "" then
-        exception:raise("core.badCall", {
-            errMsg = "there should be subModule in your restfull API.",
-        })
+function valueIsValid(v)
+    if v ~= nil and v ~= "" then
+        return true
+	end
+    return false
+end
+function isGetAllDeps(dep, depId, sec, secId, title, titleId)
+    if valueIsValid(dep) and not valueIsValid(depId) and not valueIsValid(sec)
+        and not valueIsValid(secId) and not valueIsValid(title) and not valueIsValid(titleId) then
+        return true
     end
 
-    local col = refMap[module] or module
-    local qry = _id == "" and {parentID = {["$exists"] = false}} or {parentID = _id}
-
-    if args then
-        for key, val in pairs(args) do
-            if key ~= "module" and key ~= "subModule" and key ~= "id" and key ~= "subId" then
-                qry[key] = val
-            end
-        end
+    return false
+end
+function isGetSepecDep(dep, depId, sec, secId, title, titleId)
+    if valueIsValid(dep) and valueIsValid(depId) and not valueIsValid(sec)
+        and not valueIsValid(secId) and not valueIsValid(title) and not valueIsValid(titleId) then
+        return true
     end
+    return false
+end
+function isGetAllSecs(dep, depId, sec, secId, title, titleId)
+    if valueIsValid(dep) and valueIsValid(depId) and valueIsValid(sec) and not valueIsValid(secId) and not valueIsValid(title) 
+        and not valueIsValid(titleId) then
+        return true
+    end
+    return false
+end
+function isGetSepecSec(dep, depId, sec, secId, title, titleId)
+    if valueIsValid(dep) and valueIsValid(depId) and valueIsValid(sec) and valueIsValid(secId) and not valueIsValid(title) and not valueIsValid(titleId) then
+        return true
+    end
+    return false
+end
+function isGetSepecSec(dep, depId, sec, secId, title, titleId)
+    if valueIsValid(dep) and valueIsValid(depId) and valueIsValid(sec) and valueIsValid(secId) and not valueIsValid(title) and not valueIsValid(titleId) then
+        return true
+    end
+    return false
+end
+function isGetAllDocs(dep, depId, sec, secId, title, titleId)
+    if valueIsValid(dep) and valueIsValid(depId) and valueIsValid(sec) and valueIsValid(secId) and valueIsValid(title) and not valueIsValid(titleId) then
+        return true
+    end
+    return false
+end
+function isGetSepecDoc(dep, depId, sec, secId, title, titleId)
+    if valueIsValid(dep) and valueIsValid(depId) and valueIsValid(sec) and valueIsValid(secId) and valueIsValid(title) and valueIsValid(titleId) then
+        return true
+    end
+    return false
+end
 
+function getAllDeps(dep)
+    return "DepartmentGov", {key ~= ""}
+end
+function getSepecDep(dep, depId)
+    return "DepartmentGov", {key = depId}
+end
+function getAllSecs(depId)
+    return depId, {section = {["$exists"] = true}}
+end
+function getSepecSec(depId, secId)
+    return depId, {_id = secId}
+end
+function getSecAllDocs(depId, secId)
+    local res = self:getOne(depId, {_id= secId})
+    if next(res) then
+        return depId, {parent = res["section"]}
+    else
+        ngx.log(ngx.ERROR, "error happened for secId:", secId)
+        return depId, {} 
+    end
+end
+function getSecDoc(depId, secId, titleId)
+    local res = self:getOne(depId, {_id= secId})
+    if next(res) then
+        return depId, {_id = titleId}
+    else
+        ngx.log(ngx.ERROR, "error happened for secId:", secId)
+        return depId, {} 
+    end
+end 
+function getWhichOperate(dep, depId, sec, secId, title, titleId )
+    if isGetAllDeps(dep, depId, sec, secId, title, titleId) then
+        col, qry = getAllDeps(dep)
+    elseif isGetSepecDep(dep, depId, sec, secId, title, titleId) then
+        col, qry = getSepecDep(dep, depId)
+    elseif isGetAllSecs(dep, depId, sec, secId, title, titleId) then
+        col, qry = getAllSecs(depId)
+    elseif isGetSepecSec(dep, depId, sec, secId, title, titleId) then
+        col, qry = getSepecSec(depId, secId)
+
+    elseif isGetAllDocs(dep, depId, sec, secId, title, titleId) then
+        col, qry = getSecAllDocs(depId, secId)
+    elseif isGetSepecDoc(dep, depId, sec, secId, title, titleId) then
+        col, qry = getSecDoc(depId, secId, titleId)
+    else
+        ngx.log(ngx.ERROR, "get error in object conditions")
+    end
+end
+
+function Object:get(dep, depId, sec, secId, title, titleId, isFile)
+    local col, qry, res
+    col, qry = getWhichOperate(dep, depId, sec, secId, title, titleId)  
     res = self.dbmodule:getMul(col, qry)
- 
-
-    self:decorateResult(col, res, _id)
+    --self:decorateResult(col, res, _id)
     return table.getn(res) == 0 and '[]' or res
 
 end
 --(jsonObj.mkey, jsonObj.subKey, args, jsonObj.data, isFile)
-function Object:post(dep, sec, args, data, isFile)
+function Object:post(dep, sec, args, data, isFile) --only for restAPI
     if not isFile and(dep == "" or data == nil )  then
         exception:raise("core.badCall", {
             errMsg = "there should be specific dep in your restfull API.",
@@ -140,69 +215,25 @@ function Object:post(dep, sec, args, data, isFile)
 	--local ret, errMsg = util:checkItemName(data)
     return self.dbmodule:add(dep, sec, data)
 end
-
-
-function Object:put(module, args, jsonStr, _id, subModule, subId, vdom)
-    local result = nil
-    if _id == "" then
-        exception:raise("core.badCall", {
-            errMsg = "there should be id in your restfull API.",
-        })
-    elseif subModule ~= "" and subId == "" then
-        exception:raise("core.badCall", {
-            errMsg = "there should be subID in your restfull API.",
-        })
+function Object:put(dep, depId, sec, secId, title, titleId, jsonStr)
+    local col, qry
+    if valueIsValid(depId) and valueIsValid(secId) and valueIsValid(titleId) then
+        ngx.log(ngx.ERROR, "get error in object put")
+        return {msg = "Invalid update operate."}, 500
     end
-    local newDoc = util:jsonDecode(jsonStr)
+    col, qry = getWhichOperate(dep, depId, sec, secId, title, titleId)
 
-    local qry = {_id = subId == "" and _id or util:str2objID(subId)}
-    local col =  module
-    if subId ~= "" then
-        newDoc._id = nil
-        newDoc.parentID = _id
-        col = col.."Sub"
-    end
+    return self:update(col, qry, jsonStr)
 
-    return self:update(col, qry, newDoc)
 end
 
-function Object:delete(module, args, jsonStr, _id, subModule, subId, vdom)
-    if _id == ""  then
-        exception:raise("core.badCall", {
-            errMsg = "there should be id in your restfull API.",
-        })
-    elseif subModule ~= "" and subId == "" then
-        exception:raise("core.badCall", {
-            errMsg = "there should be subID in your restfull API.",
-        })
-    end
-
-    ngx.log(ngx.DEBUG, "delete starting ...", module)
-
+function Object:delete(dep, depId, sec, secId, title, titleId)
     
-    local qry = nil
-    local col =  module
-    local deleteItem = nil
-    if subModule == "" then
-        qry = {["$or"]={
-            {["name"] = _id},
-            {["parentID"] = _id}
-        }}
-        util:zeroBasedArray(qry)
-
-        deleteItem = self.dbmodule:getOne(module, {_id = _id})
-        if deleteItem and deleteItem.ref and deleteItem.ref ~= 0 then
-            ngx.exit(ngx.HTTP_NOT_ALLOWED)
-        end
-    else
-        qry = {_id = util:str2objID(subId)}
-        deleteItem = self.dbmodule:getOne(module, qry)
-        if deleteItem and deleteItem.ref and deleteItem.ref ~= 0 then
-            ngx.exit(ngx.HTTP_NOT_ALLOWED)
-        end
-        
-        col = col.."Sub"
+    if valueIsValid(depId) and valueIsValid(secId) and valueIsValid(titleId) then
+        ngx.log(ngx.ERROR, "get error in object put")
+        return {msg = "Invalid delete operate."}, 500
     end
+    local col, qry = getWhichOperate(dep, depId, sec, secId, title, titleId)
 
     return  self.dbmodule:delete(col, qry)
 end

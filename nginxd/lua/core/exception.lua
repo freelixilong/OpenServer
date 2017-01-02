@@ -1,7 +1,3 @@
---@ author: zhouxuehao
---@ date: 2015-4-7
---@ exception module
-
 local sysConf = loadMod("config.system")
 local errCode = loadMod("config.error")
 
