@@ -86,17 +86,22 @@ function Object:decorateResult(module, resultTable, _id)
     end
 end
 function valueIsValid(v)
-    if v ~= nil and v ~= "" then
+    if v ~= nil and v ~= " " and v ~= ""then
         return true
 	end
     return false
 end
 function isGetAllDeps(dep, depId, sec, secId, title, titleId)
+    ngx.log(ngx.ERR, "isGetAllDeps dep:", dep)
+    ngx.log(ngx.ERR, "isGetAllDeps depId:", depId)
+    ngx.log(ngx.ERR, "isGetAllDeps sec:", sec)
+ 
     if valueIsValid(dep) and not valueIsValid(depId) and not valueIsValid(sec)
         and not valueIsValid(secId) and not valueIsValid(title) and not valueIsValid(titleId) then
+        ngx.log(ngx.ERR, "isGetAllDeps true")
         return true
     end
-
+    ngx.log(ngx.ERR, "isGetAllDeps false")
     return false
 end
 function isGetSepecDep(dep, depId, sec, secId, title, titleId)
@@ -139,10 +144,10 @@ function isGetSepecDoc(dep, depId, sec, secId, title, titleId)
 end
 
 function getAllDeps(dep)
-    return "DepartmentGov", {key ~= ""}
+    return "GovDepartment",  {key = {["$ne"] = ""}}
 end
 function getSepecDep(dep, depId)
-    return "DepartmentGov", {key = depId}
+    return "GovDepartment", {key = depId}
 end
 function getAllSecs(depId)
     return depId, {section = {["$exists"] = true}}
@@ -155,7 +160,7 @@ function getSecAllDocs(depId, secId)
     if next(res) then
         return depId, {parent = res["section"]}
     else
-        ngx.log(ngx.ERROR, "error happened for secId:", secId)
+        ngx.log(ngx.ERR, "error happened for secId:", secId)
         return depId, {} 
     end
 end
@@ -164,13 +169,19 @@ function getSecDoc(depId, secId, titleId)
     if next(res) then
         return depId, {_id = titleId}
     else
-        ngx.log(ngx.ERROR, "error happened for secId:", secId)
+        ngx.log(ngx.ERR, "error happened for secId:", secId)
         return depId, {} 
     end
 end 
 function getWhichOperate(dep, depId, sec, secId, title, titleId )
+    ngx.log(ngx.ERR, "getWhichOperate:", dep)
+    ngx.log(ngx.ERR, "getWhichOperate:", depId)
+    ngx.log(ngx.ERR, "getWhichOperate:", sec)
+    local col, qry = nil, nil
     if isGetAllDeps(dep, depId, sec, secId, title, titleId) then
         col, qry = getAllDeps(dep)
+        util:zeroBasedArray(qry)
+        ngx.log(ngx.DEBUG, "get qry:", util:jsonEncode(qry))
     elseif isGetSepecDep(dep, depId, sec, secId, title, titleId) then
         col, qry = getSepecDep(dep, depId)
     elseif isGetAllSecs(dep, depId, sec, secId, title, titleId) then
@@ -183,13 +194,16 @@ function getWhichOperate(dep, depId, sec, secId, title, titleId )
     elseif isGetSepecDoc(dep, depId, sec, secId, title, titleId) then
         col, qry = getSecDoc(depId, secId, titleId)
     else
-        ngx.log(ngx.ERROR, "get error in object conditions")
+        ngx.log(ngx.ERR, "get error in object conditions")
     end
+    return col, qry
 end
 
 function Object:get(dep, depId, sec, secId, title, titleId, isFile)
     local col, qry, res
-    col, qry = getWhichOperate(dep, depId, sec, secId, title, titleId)  
+    ngx.log(ngx.DEBUG, "get dep", dep)  
+    col, qry = getWhichOperate(dep, depId, sec, secId, title, titleId)
+
     res = self.dbmodule:getMul(col, qry)
     --self:decorateResult(col, res, _id)
     return table.getn(res) == 0 and '[]' or res

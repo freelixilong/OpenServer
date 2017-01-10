@@ -1,8 +1,3 @@
---@ author: zhouxuehao
---@ date: 2015-4-7
---@ mongodb api wrap
-
-
 local mongo = require("resty.mongol")
 local util = loadMod("core.util")
 local exception = loadMod("core.exception")
@@ -129,26 +124,8 @@ function MongoDB:getMul(col, qry)
         if not util:isString(item._id) then
             item._id = util:objID2str(item._id)
         end
-        if item["realId"] ~= nil then
-            item.id = item["realId"]
-        else
-            cnt = cnt + 1
-            item.id = cnt
-        end
-        
-        if item.ref and item.ref ~= 0 then
-            item.can_delete = false
-        else
-            item.can_delete = true
-        end
-
-        if item.defaultFlag == 1 then
-            item.can_edit = false
-            item.can_view = true
-        else
-            item.can_edit = true
-            item.can_view = false
-        end
+        cnt = cnt + 1
+        item.id = cnt
         if item and item.name and not item.label then
             item.label = item.name
             item.value = item.name

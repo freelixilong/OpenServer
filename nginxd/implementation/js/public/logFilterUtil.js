@@ -1,8 +1,3 @@
-/*
-    log access filter util functions
-    author: KaiLiu
-*/
-
 function serializeArray(inputArray) {
     var arrayString = "";
 

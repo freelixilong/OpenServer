@@ -17,7 +17,7 @@
 		var lastPlusIcon = 'themes/project/img/icon/menu_plus_last.png';
 
 		var UI = app.view({
-			//type: 'Layout',
+			type: 'Layout',
 			template: '@widget/MenuTree.html',
 			initialize: function(options) {
 				this._options = options;

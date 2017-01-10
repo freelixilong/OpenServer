@@ -24,7 +24,7 @@
         return app.view({
             template: [
                 '<div>',
-                '{{#each actions}}',
+                '{{#each actns}}',
                 '<span class="btn btn-primary" action="gridAction" event_name="{{eventName}}">{{#if faIcon}}<i class="fa {{faIcon}}"></i> {{/if}}{{label}}</span> ',
                 '{{/each}}',
                 '</div>'
@@ -32,7 +32,7 @@
             initialize: function(options) {
                 this.model = new Backbone.Model();
                 this.model.set({
-                    actions: options.actions
+                    actns: options.actions
                 });
             },
             actions: {
@@ -67,7 +67,7 @@
                         cellName = this.model.get("customHeader");
                     }
                     cellName = "-" + cellName + BaseCellName;
-                    cellName = _.str.camelize(cellName);
+                    cellName = _.string.camelize(cellName);
 
                     var cellView = app.widget(cellName, {
                         columnModel: this.model
@@ -104,7 +104,7 @@
                     cellName = this.model.get("customCell");
                 }
                 cellName = "-" + cellName + BaseCellName;
-                cellName = _.str.camelize(cellName);
+                cellName = _.string.camelize(cellName);
 
                 var cellView = app.widget(cellName, {
                     columnModel: this.model,
