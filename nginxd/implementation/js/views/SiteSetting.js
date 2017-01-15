@@ -18,6 +18,12 @@
             toggleCtrlViewShow(this.tool, true);
             toggleCtrlViewShow(this.grid, true);
         },
+        onSubEditMode: function(){
+            this.formview.currentView.$el.hide();
+        },
+        onSubGridMode: function(){
+            this.formview.currentView.$el.show();
+        },
         onShow: function(){
             var that = this;
             this.tool.show(app.widget('GridTool', {
@@ -51,10 +57,10 @@
                 this.trigger("view:edit-mode");
                 this.formview.show(new FormView());
             } else if(eventName == "edit") {
-                var d = data;
-                if (_.isUndefined(d) && !_.isUndefined(this.select)) {
-                    d = this.selectData;
-                }
+                var d = this.selectData;
+                // if (_.isUndefined(d) && !_.isUndefined(this.select)) {
+                //     d = this.selectData;
+                // }
                 if (_.isUndefined(d)){
                     app.trigger("app:notify", {
                         type: "error",
@@ -71,7 +77,7 @@
                     btn: [{
                         label: "Ok",
                         action: function() {
-                            that.grid.currentView.trigger("view:data-delete", data._id);
+                            that.grid.currentView.trigger("view:data-delete", that.select);
                             that.formview.close();
                         }
                     }, {
@@ -81,6 +87,9 @@
             }
         },
         onDataModify: function(newdata) {
+            if (!newdata["_id"]) {
+                newdata["_id"] = "single";
+            }
             this.grid.currentView.trigger("view:data-modify", newdata, {refresh:false});
         },
         onModifyOver: function(options) {
@@ -91,7 +100,7 @@
             }else{//create and edit ok
                 var that = this;
                 app.remote({
-                    entity: that.context,
+                    entity: contextName,
                 }).done(function(data, textStatus, jqXHR) {
                     that.grid.currentView.trigger('view:grid-refresh',data);
                     var idField = that.grid.currentView.body.currentView.idField || '_id';
@@ -135,13 +144,32 @@
             }
         },
         onRenderOver: function(displayStr) {
-            this.form.currentView.getEditor("matchSeq").setVal(displayStr);
+            //this.form.currentView.getEditor("matchSeq").setVal(displayStr);
         },
         onDataModify: function(newdata) {
             this.parentCt.trigger("view:data-modify", newdata);
         },
+        onSubModify: function(subData){
+            var find = false;
+            _.each(this.data.fields, function(e){
+                if (e["name"]== subData["name"]){
+                    _.extend(e, subData);
+                    find = true;
+                }
+            });
+            if (!find){ //added a new item
+                this.data.fields.push(subData);
+            }
+            this.trigger("view:data-modify", this.data);
+        },
         onModifyOver: function() {
             this.parentCt.trigger("view:modify-over");
+        },
+        onSubEditMode: function(){
+            this.form.currentView.$el.hide();
+        },
+        onSubGridMode: function(){
+            this.form.currentView.$el.show();
         },
     });
 
@@ -160,7 +188,7 @@
         	this.tool.show(app.widget('GridTool', {
                 actions: toolActions
             }));
-           this.showGrid(this.data);
+            this.showGrid(this.data); 
         },
       
         showForm: function(options) {
@@ -185,22 +213,19 @@
            
         },
         makeGridData: function(fields){
-        	var data = [];
-        	_.each(fields, function(v, k){
-        		var xpath= "";
-        		try {
-        			xpath = v.select[0].xpath;
-        		} catch(e){
-        			xpath = "";
-        		}
-        		
-        		data.push({_id: k,name:k, option: v.option, xpath: xpath});
+            if (_.isUndefined(fields)){
+                return [];
+            }
+        	_.each(fields, function(e){
+                if(!e._id){
+                    e._id = e.name;
+                }
         	});
-            return data;
+            return fields;
         },
         showGrid: function(data) {
             var gridData = this.makeGridData(data);
-            var subColumnOptions = [{label: "fields", name: "name"}, {label: "option", name: "option"}, {label: "select path", name: "xpath"}];
+            var subColumnOptions = [{label: "field", name: "name"}, {label: "option", name: "option"}, {label: "select path", name: "xpath"}];
             this.grid.show(app.widget('Grid', {
                 //context: contextName,
                 columns: subColumnOptions,
@@ -213,17 +238,14 @@
                     view.$el.removeClass("log_entry_selected")
                 });
                 itemView.$el.addClass("log_entry_selected");
-
-                this.select = itemView.model.attributes.seq;
-                this._id = itemView.model.attributes._id;
-               
+                this.select = itemView.model.attributes;             
                 
             }else if (eventName == "create") {
 				this.trigger("view:edit-mode");
                 this.showForm();
             } else if (eventName == "edit") {
 				this.trigger("view:edit-mode");
-                this.showForm({data: data, readonly: false});
+                this.showForm({data: this.select, readonly: false});
             } else if (eventName === 'view') {
 				this.trigger("view:edit-mode");
                 this.showForm({data: data, readonly: true});
@@ -244,13 +266,6 @@
                         label: "Cancel",
                     }]
                 });
-            } else if ('move' === eventName) {
-                this.move = true;
-                this.showMoveOverLay();
-            } else if ("insert" === eventName) {
-                this.insert = true;
-				this.trigger("view:edit-mode");
-                this.showForm();
             }
         },
         onDataModify: function(newdata) {
@@ -295,5 +310,15 @@
 			toggleCtrlViewShow(this.grid, true);
 			this.parentCt.trigger("view:sub-grid-mode");
 		},
+        onDataModify: function(newdata) {
+            this.parentCt.trigger("view:sub-modify", newdata);
+            this.trigger("view:modify-over");
+        },
+        onModifyOver: function() {
+            this.formview.close();
+            //this.grid.currentView.trigger('view:grid-refresh');
+            this.onShow();
+            this.trigger("view:grid-mode");
+        },
     });
 })(Application);

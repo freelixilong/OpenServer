@@ -11,6 +11,7 @@
 		"Users": "用户管理",
 		"Log & Report": "系统记录及报告",
 		"Miscellaneous": "其他设置",
-		"Logout":"退出"
+		"Logout":"退出",
+		"govnment": "政府关键字，必须唯一且为英文",
 	}
 }

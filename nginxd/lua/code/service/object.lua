@@ -147,7 +147,7 @@ function getAllDeps(dep)
     return "GovDepartment",  {key = {["$ne"] = ""}}
 end
 function getSepecDep(dep, depId)
-    return "GovDepartment", {key = depId}
+    return "GovDepartment", {_id = depId}
 end
 function getAllSecs(depId)
     return depId, {section = {["$exists"] = true}}
@@ -237,7 +237,7 @@ function Object:put(dep, depId, sec, secId, title, titleId, jsonStr)
     end
     col, qry = getWhichOperate(dep, depId, sec, secId, title, titleId)
 
-    return self:update(col, qry, jsonStr)
+    return self:update(col, qry, util:jsonDecode(jsonStr))
 
 end
 

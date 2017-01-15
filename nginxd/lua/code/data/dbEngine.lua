@@ -91,8 +91,16 @@ function MongoEngine:update(col, qry, doc)
     local res = mongodb:getOne(col, qry)
 
     if next(res) == nil  then
+        if (doc["_id"]== "single" ) then
+            doc["_id"] = doc["key"];
+            local docs = {}
+            table.insert(docs, doc)
+            mongodb:creat(col, docs)
+            return {status=201, msg="create  successfully."}
+        end
         return {msg = "Entry not found."}, 500
     end
+    ngx.log(ngx.DEBUG, "doc = ", util:jsonEncode(doc))
     local result = mongodb:update(col, qry, doc)
     -- now the doc has been updated in mongodb successfully
     return {status=201, msg="update  successfully in database."}
