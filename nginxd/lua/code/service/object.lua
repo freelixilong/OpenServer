@@ -248,7 +248,7 @@ function Object:delete(dep, depId, sec, secId, title, titleId)
         return {msg = "Invalid delete operate."}, 500
     end
     local col, qry = getWhichOperate(dep, depId, sec, secId, title, titleId)
-
+    ngx.log(ngx.DEBUG, "delete object", util:jsonEncode(qry))
     return  self.dbmodule:delete(col, qry)
 end
 

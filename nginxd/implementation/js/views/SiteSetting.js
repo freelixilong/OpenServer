@@ -58,14 +58,12 @@
                 this.formview.show(new FormView());
             } else if(eventName == "edit") {
                 var d = this.selectData;
-                // if (_.isUndefined(d) && !_.isUndefined(this.select)) {
-                //     d = this.selectData;
-                // }
                 if (_.isUndefined(d)){
                     app.trigger("app:notify", {
                         type: "error",
                         msg: "You must select a department!",
                     });
+                    return;
                 }
                 this.trigger("view:edit-mode");
                 this.formview.show(new FormView({data: d}));
@@ -90,7 +88,8 @@
             if (!newdata["_id"]) {
                 newdata["_id"] = "single";
             }
-            this.grid.currentView.trigger("view:data-modify", newdata, {refresh:false});
+            this.grid.currentView.trigger("view:data-modify", newdata);
+            //this.trigger("view:modify-over");
         },
         onModifyOver: function(options) {
             if (!options ){//cancel
@@ -104,9 +103,10 @@
                 }).done(function(data, textStatus, jqXHR) {
                     that.grid.currentView.trigger('view:grid-refresh',data);
                     var idField = that.grid.currentView.body.currentView.idField || '_id';
-                    var id = options[idField] || options.name;
-                    var model = that["grid"].currentView.body.currentView.collection.get(id);
-                    that.trigger("view:grid-action", 'edit', model.toJSON());
+                    var id = (options[idField]!=="single"&& options[idField]) || options.name;
+                    var model = _.find(data, function(e){ return e["_id"] == id });
+                    //var model = that["grid"].currentView.body.currentView.collection.get(id);
+                    that.trigger("view:grid-action", 'edit', model);
                 }).fail(function(jqXHR, textStatus, errorThrown) {
                     app.failCommon(jqXHR, textStatus, errorThrown);
                 });
@@ -158,8 +158,19 @@
                 }
             });
             if (!find){ //added a new item
+                if(!this.data.fields)
+                    this.data.fields = [];
+                if (!subData["_id"]) {
+                    subData["_id"] = subData["name"];
+                }
                 this.data.fields.push(subData);
             }
+            this.trigger("view:data-modify", this.data);
+        },
+        onSubDelete:function(id){
+            this.data.fields = _.reject(this.data.fields, function(row) {
+                return row._id == id;
+            });
             this.trigger("view:data-modify", this.data);
         },
         onModifyOver: function() {
@@ -240,10 +251,17 @@
                 itemView.$el.addClass("log_entry_selected");
                 this.select = itemView.model.attributes;             
                 
-            }else if (eventName == "create") {
+            }else if (eventName == "add") {
 				this.trigger("view:edit-mode");
                 this.showForm();
             } else if (eventName == "edit") {
+                if (_.isUndefined(this.select)){
+                    app.trigger("app:notify", {
+                        type: "error",
+                        msg: "You must select a field!",
+                    });
+                    return;
+                }
 				this.trigger("view:edit-mode");
                 this.showForm({data: this.select, readonly: false});
             } else if (eventName === 'view') {
@@ -251,16 +269,16 @@
                 this.showForm({data: data, readonly: true});
             } else if (eventName == "delete") {
                 var that = this;
-                this.$el.find("[event_name='insert']").addClass("disabled");
-                this.$el.find("[event_name='move']").addClass("disabled");
+                
                 app.trigger("app:notify", {
                     type: "confirm",
                     msg: "Delete?",
                     btn: [{
                         label: "Ok",
                         action: function() {
-                            that.grid.currentView.trigger("view:data-delete", data._id);
+                            that.trigger("view:data-delete", that.select._id);
                             that.formview.close();
+                            
                         }
                     }, {
                         label: "Cancel",
@@ -268,36 +286,15 @@
                 });
             }
         },
-        onDataModify: function(newdata) {
-            if (this.insert === true) {
-                var currentId = this.getCurrentRealId();
-                _.extend(newdata, {order:"before", to: currentId});
-                this.insert = false;
-            } else if(this.move) {
-                this.move = false;
-                newdata.seq = this.select;
-                var currentId = this.getCurrentRealId();
-                var order = "after";
-                var beforeSeqId = 1;
-                if (newdata.before) {
-                    order = "before";
-                } else {
-                    beforeSeqId = this.getNextSeqByRealId(newdata.pos);
-                } 
-                _.extend(newdata, {_id:this._id, order:order, to: newdata.pos, child_mkey: currentId, beforeSeqId:beforeSeqId}); //consistent with the web implement
-            }
-            this.grid.currentView.trigger("view:data-modify", newdata);
-        },
-        onModifyOver: function() {
-            this.formview.close();
-            this.grid.currentView.trigger('view:grid-refresh');
-            this.onShow();
-			this.trigger("view:grid-mode");
+        onDataDelete: function(_id){
+            this.trigger("view:delete-over", _id);
+            this.select = null;
         },
         onDeleteOver: function(id) {
-            this.seqData = _.reject(this.seqData, function(row) {
+            this.data = _.reject(this.data, function(row) {
                 return row._id == id;
             });
+            this.parentCt.trigger("view:sub-delete", id);
             this.trigger("view:modify-over");
         },
 		onEditMode: function(){

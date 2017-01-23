@@ -89,7 +89,7 @@ end
 function MongoEngine:update(col, qry, doc)
    
     local res = mongodb:getOne(col, qry)
-
+    ngx.log(ngx.ERR, "***** update :",util:jsonEncode(qry))
     if next(res) == nil  then
         if (doc["_id"]== "single" ) then
             doc["_id"] = doc["key"];
