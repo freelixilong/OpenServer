@@ -16,8 +16,8 @@
 	editorOptions = {
         _global: {
             layout: {
-                label: 'col-xs-3',
-                field: 'col-xs-6'
+                label: 'col-xs-2',
+                field: 'col-xs-4'
             }
         },
         name: {
@@ -53,9 +53,9 @@
             help: '主页',
         },
         condition: {
-            type: "text",
+            type: "multitext",
             label: "Craw Condition",
-            help: "爬取的页面条件，多为标题xpath"
+            //help: "爬取的页面条件，多为标题xpath"
         },
         nextPageXpath: {
             type: "text",

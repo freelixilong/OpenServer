@@ -40,7 +40,7 @@
 				this.name = options.name;
 				this.label = options.label;
 				this.layout = options.layout;
-				this.values = options.parentCt.data ? options.parentCt.data[this.name] : [];
+				this.values = options.parentCt.data ? options.parentCt.data[this.name] : [""];
 				this.options = options;
 			},
 			onRender: function() {

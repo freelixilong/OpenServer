@@ -82,6 +82,7 @@
                         label: "Cancel",
                     }]
                 });
+                
             }
         },
         onDataModify: function(newdata) {
@@ -96,6 +97,7 @@
                 this.formview.close();
                 this.grid.currentView.trigger('view:grid-refresh');
                 this.trigger("view:grid-mode");
+
             }else{//create and edit ok
                 var that = this;
                 app.remote({
@@ -111,6 +113,7 @@
                     app.failCommon(jqXHR, textStatus, errorThrown);
                 });
             }
+
         },
     });
     var formView = "Department Setting";
