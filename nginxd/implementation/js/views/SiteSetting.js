@@ -69,6 +69,7 @@
                 this.formview.show(new FormView({data: d}));
             } else if(eventName == "delete") {
                 var that = this;
+                //alert("delete the obj?");
                 app.trigger("app:notify", {
                     type: "confirm",
                     msg: "Delete?",
@@ -95,7 +96,7 @@
         onModifyOver: function(options) {
             if (!options ){//cancel
                 this.formview.close();
-                this.grid.currentView.trigger('view:grid-refresh');
+                this.onShow();
                 this.trigger("view:grid-mode");
 
             }else{//create and edit ok
@@ -152,29 +153,25 @@
         onDataModify: function(newdata) {
             this.parentCt.trigger("view:data-modify", newdata);
         },
-        onSubModify: function(subData){
-            var find = false;
-            _.each(this.data.fields, function(e){
-                if (e["name"]== subData["name"]){
-                    _.extend(e, subData);
-                    find = true;
-                }
-            });
-            if (!find){ //added a new item
-                if(!this.data.fields)
-                    this.data.fields = [];
-                if (!subData["_id"]) {
-                    subData["_id"] = subData["name"];
-                }
-                this.data.fields.push(subData);
+        onSubModify: function(fields){
+            if(!_.isUndefined(fields)){
+                this.data.fields = fields;
             }
-            this.trigger("view:data-modify", this.data);
+            
+            app.remote({entity: contextName, payload:this.data}).done(function(d, textStatus, jqXHR) {
+                app.trigger("app:notify", {
+                    type: "success",
+                    msg: "Config:Success",
+                });
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                app.failCommon(jqXHR, textStatus, errorThrown);
+            });
         },
         onSubDelete:function(id){
             this.data.fields = _.reject(this.data.fields, function(row) {
                 return row._id == id;
             });
-            this.trigger("view:data-modify", this.data);
+            this.trigger("view:sub-modify");
         },
         onModifyOver: function() {
             this.parentCt.trigger("view:modify-over");
@@ -280,7 +277,7 @@
                         label: "Ok",
                         action: function() {
                             that.trigger("view:data-delete", that.select._id);
-                            that.formview.close();
+                            //that.formview.close();
                             
                         }
                     }, {
@@ -290,14 +287,14 @@
             }
         },
         onDataDelete: function(_id){
+            this.parentCt.trigger("view:sub-delete", _id);
+            this.data = _.reject(this.data, function(row) {
+                return row._id == _id;
+            });
             this.trigger("view:delete-over", _id);
             this.select = null;
         },
-        onDeleteOver: function(id) {
-            this.data = _.reject(this.data, function(row) {
-                return row._id == id;
-            });
-            this.parentCt.trigger("view:sub-delete", id);
+        onDeleteOver: function() {
             this.trigger("view:modify-over");
         },
 		onEditMode: function(){
@@ -310,13 +307,27 @@
 			toggleCtrlViewShow(this.grid, true);
 			this.parentCt.trigger("view:sub-grid-mode");
 		},
-        onDataModify: function(newdata) {
-            this.parentCt.trigger("view:sub-modify", newdata);
+        onDataModify: function(subData) {
+            var find = false;
+            _.each(this.data, function(e){
+                if (e["name"]== subData["name"]){
+                    _.extend(e, subData);
+                    find = true;
+                }
+            });
+            if (!find){ //added a new item
+                if(!_.isArray(this.data) )
+                    this.data = [];
+                if (!subData["_id"]) {
+                    subData["_id"] = subData["name"];
+                }
+                this.data.push(subData);
+            }
+            this.parentCt.trigger("view:sub-modify",this.data);
             this.trigger("view:modify-over");
         },
         onModifyOver: function() {
             this.formview.close();
-            //this.grid.currentView.trigger('view:grid-refresh');
             this.onShow();
             this.trigger("view:grid-mode");
         },
